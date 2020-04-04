@@ -2,15 +2,16 @@ package sample;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
 
 public class DatabaseManager {
-    private static DatabaseManager instance = null;
+    private static Connection instance = null;
 
     private DatabaseManager() {
 
     }
 
-    public static DatabaseManager getInstance()
+    public static Connection getInstance()
     {
         if (instance == null)
         {
@@ -18,7 +19,17 @@ public class DatabaseManager {
             {
                 if (instance == null)
                 {
-                    instance = new DatabaseManager();
+                    try {
+                        Class.forName("org.sqlite.JDBC");
+                        instance = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
+                        System.out.println("Database Connection SUCCESSFUL");
+
+                    } catch (ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return instance;
+
                 }
             }
         }
