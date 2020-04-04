@@ -1,5 +1,8 @@
 package sample;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseManager {
     private static DatabaseManager instance = null;
 
@@ -42,6 +45,20 @@ public class DatabaseManager {
     public void deleteUser(int userId)
     {
 
+    }
+
+
+    public List<User> getAllUser()
+    {
+        List <User> list = new ArrayList<User>();
+        return list;
+    }
+
+    public List<User> getUsers(String filter)
+    {
+        List <User> users = new ArrayList<User>();
+
+        return users;
     }
 
 
