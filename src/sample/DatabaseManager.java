@@ -38,8 +38,31 @@ public class DatabaseManager {
 
     }
 
-    public boolean addUser(User user)
-    {
+    public static boolean addUser(User user) throws SQLException {
+        if(instance != null)
+        {
+            String query = "INSERT INTO User (fName,lName,password,dateCreated)" +
+                           "VALUES (?,?,?,?)";
+
+            PreparedStatement pst = instance.prepareStatement(query);
+
+            pst.setString(1, user.getFirstName());
+            pst.setString(2, user.getLastName());
+            pst.setString(3, user.getPassword());
+            pst.setString(4, "2020-04-04");
+
+            pst.execute();
+
+            System.out.println("Qry successful");
+
+            pst.close();
+
+        }
+        else
+        {
+            System.out.println("Add query failed.");
+            return false;
+        }
         return true;
     }
 

@@ -63,5 +63,10 @@ public class User {
         return lastName;
     }
 
+    public String getPassword()
+    {
+        return password;
+    }
+
 
 }
