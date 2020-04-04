@@ -33,7 +33,16 @@ public class DatabaseManager {
     {
         return true;
     }
-    
+
+    public void deleteUser(String username)
+    {
+
+    }
+
+    public void deleteUser(int userId)
+    {
+
+    }
 
 
 
