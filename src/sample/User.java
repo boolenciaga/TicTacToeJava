@@ -2,6 +2,7 @@ package sample;
 
 public class User {
 
+    private int    userID;
     private String username;
     private String password;
     private String firstName;
@@ -34,6 +35,11 @@ public class User {
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+    public void setUserID(int id)
+    {
+        userID = id;
     }
 
     public String [] getAll()

@@ -41,22 +41,24 @@ public class DatabaseManager {
     public static boolean addUser(User user) throws SQLException {
         if(instance != null)
         {
-            String query = "INSERT INTO User (fName,lName,password,dateCreated)" +
-                           "VALUES (?,?,?,?)";
+            synchronized (DatabaseManager.class)
+            {
+                String query = "INSERT INTO User (fName,lName,password,dateCreated)" +
+                        "VALUES (?,?,?,?)";
 
-            PreparedStatement pst = instance.prepareStatement(query);
+                PreparedStatement pst = instance.prepareStatement(query);
 
-            pst.setString(1, user.getFirstName());
-            pst.setString(2, user.getLastName());
-            pst.setString(3, user.getPassword());
-            pst.setString(4, "2020-04-04");
+                pst.setString(1, user.getFirstName());
+                pst.setString(2, user.getLastName());
+                pst.setString(3, user.getPassword());
+                pst.setString(4, "2020-04-04");
 
-            pst.execute();
+                pst.execute();
 
-            System.out.println("Qry successful");
+                System.out.println("Qry successful");
 
-            pst.close();
-
+                pst.close();
+            }
         }
         else
         {
@@ -68,6 +70,14 @@ public class DatabaseManager {
 
     public boolean updateUser(User user)
     {
+        if (instance != null)
+        {
+            synchronized (DatabaseManager.class)
+            {
+                String query = "Update User (fName,lName,password,dateCreated)" +
+                        "VALUES (?,?,?,?)";
+            }
+        }
         return true;
     }
 
