@@ -74,5 +74,10 @@ public class User {
         return password;
     }
 
+    public int    getUserID()
+    {
+        return userID;
+    }
+
 
 }

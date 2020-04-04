@@ -25,6 +25,8 @@ public class Main extends Application {
         User Phillip = new User("Brock",  "Hamptom", "Phillip", "Chan");
 
         DatabaseManager.getInstance();
-        DatabaseManager.addUser(Phillip);
+//        DatabaseManager.addUser(Phillip);
+        Phillip.setUserID(DatabaseManager.getUserId(Phillip));
+        System.out.println(Phillip.getUserID());
     }
 }

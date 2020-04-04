@@ -1,5 +1,6 @@
 package sample;
 
+import javax.xml.transform.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -43,8 +44,8 @@ public class DatabaseManager {
         {
             synchronized (DatabaseManager.class)
             {
-                String query = "INSERT INTO User (fName,lName,password,dateCreated)" +
-                        "VALUES (?,?,?,?)";
+                String query = "INSERT INTO User(fName,lName,password,dateCreated,userName)" +
+                               "VALUES (?,?,?,?,?)";
 
                 PreparedStatement pst = instance.prepareStatement(query);
 
@@ -52,10 +53,12 @@ public class DatabaseManager {
                 pst.setString(2, user.getLastName());
                 pst.setString(3, user.getPassword());
                 pst.setString(4, "2020-04-04");
+                pst.setString(5, user.getUsername());
 
                 pst.execute();
 
                 System.out.println("Qry successful");
+
 
                 pst.close();
             }
@@ -65,6 +68,7 @@ public class DatabaseManager {
             System.out.println("Add query failed.");
             return false;
         }
+
         return true;
     }
 
@@ -105,6 +109,32 @@ public class DatabaseManager {
         return users;
     }
 
+    public static int getUserId(User user) {
+        int id = 0;
+
+        try {
+            String query = "SELECT userID " +
+                           "FROM User " +
+                           "WHERE userName = ?";
+
+            PreparedStatement pstmt  =  instance.prepareStatement(query);
+
+            pstmt.setString(1, user.getUsername());
+
+            ResultSet  rs   = pstmt.executeQuery();
+
+            id  = rs.getInt("userID");
+
+            System.out.println("Got User ID!");
+
+        } catch (SQLException e) {
+
+            System.out.println("FAILED TO GET USER ID");
+            e.printStackTrace();
+        }
+
+        return id;
+    }
 
 
 }
