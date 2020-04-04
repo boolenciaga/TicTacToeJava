@@ -48,6 +48,20 @@ public class User {
         return info;
     }
 
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
 
 
 }
