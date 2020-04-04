@@ -24,6 +24,16 @@ public class DatabaseManager {
 
     }
 
+    public boolean addUser(User user)
+    {
+        return true;
+    }
+
+    public boolean updateUser(User user)
+    {
+        return true;
+    }
+    
 
 
 
