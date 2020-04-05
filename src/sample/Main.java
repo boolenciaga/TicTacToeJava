@@ -22,7 +22,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SQLException {
-        User Phillip = new User("YEET",  "Hamptom", "Phillip", "Chan");
+        User Phillip = new User("JEEP",  "Hamptom", "Phillip", "Chan");
 
         DatabaseManager.getInstance();
         DatabaseManager.addUser(Phillip);
@@ -33,6 +33,8 @@ public class Main extends Application {
         Phillip.setFirstName("Not Phillip");
         System.out.println("GONNA UPDATE USER");
         DatabaseManager.updateUser(Phillip);
+        DatabaseManager.deleteUser("BROLO");
+        DatabaseManager.deleteUser(3);
 
     }
 }

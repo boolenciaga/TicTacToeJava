@@ -111,14 +111,42 @@ public class DatabaseManager {
         return false;
     }
 
-    public void deleteUser(String username)
+    public static void deleteUser(String username)
     {
+        try {
 
+            String query = "DELETE FROM USER " +
+                           "WHERE userName = ?";
+            PreparedStatement pst = instance.prepareStatement(query);
+
+            pst.setString(1, username);
+
+            pst.executeUpdate();
+
+            System.out.println("DELETED " + username + "!!!\n");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void deleteUser(int userId)
+    public static void deleteUser(int id)
     {
+        try {
 
+            String query = "DELETE FROM USER " +
+                           "WHERE userID = ?";
+            PreparedStatement pst = instance.prepareStatement(query);
+
+            pst.setInt(1, id);
+
+            pst.executeUpdate();
+
+            System.out.println("DELETED ID# " + id + "!!!\n");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
