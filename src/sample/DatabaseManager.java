@@ -57,7 +57,7 @@ public class DatabaseManager {
 
                 pst.execute();
 
-                System.out.println("Qry successful");
+                System.out.println("ADDING USER SUCCESSFUL\n\n");
 
 
                 pst.close();
@@ -72,17 +72,43 @@ public class DatabaseManager {
         return true;
     }
 
-    public boolean updateUser(User user)
+    public static boolean updateUser(User user)
     {
         if (instance != null)
         {
             synchronized (DatabaseManager.class)
             {
-                String query = "Update User (fName,lName,password,dateCreated)" +
-                        "VALUES (?,?,?,?)";
+                try {
+
+                    String query = "UPDATE  User " +
+                            "SET userName = ? , password = ? , fName = ? , lName = ? " +
+                            "WHERE userID = ?";
+
+                    PreparedStatement pst = instance.prepareStatement(query);
+
+                    pst.setString(1,user.getUsername());
+                    pst.setString(2,user.getPassword());
+                    pst.setString(3,user.getFirstName());
+                    pst.setString(4,user.getLastName());
+                    pst.setInt(5, user.getUserID());
+
+                    pst.executeUpdate();
+
+                    pst.close();
+
+                    System.out.println("UPDATED USER");
+
+                    return true;
+
+                } catch (SQLException e) {
+                    System.out.println("FAILED TO UPDATE USER");
+                    e.printStackTrace();
+
+                }
             }
         }
-        return true;
+
+        return false;
     }
 
     public void deleteUser(String username)

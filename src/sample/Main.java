@@ -22,11 +22,17 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SQLException {
-        User Phillip = new User("Brock",  "Hamptom", "Phillip", "Chan");
+        User Phillip = new User("YEET",  "Hamptom", "Phillip", "Chan");
 
         DatabaseManager.getInstance();
-//        DatabaseManager.addUser(Phillip);
+        DatabaseManager.addUser(Phillip);
         Phillip.setUserID(DatabaseManager.getUserId(Phillip));
         System.out.println(Phillip.getUserID());
+        Phillip.setUsername("GG");
+        Phillip.setLastName("DAM");
+        Phillip.setFirstName("Not Phillip");
+        System.out.println("GONNA UPDATE USER");
+        DatabaseManager.updateUser(Phillip);
+
     }
 }
