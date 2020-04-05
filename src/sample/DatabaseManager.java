@@ -55,7 +55,10 @@ public class DatabaseManager {
                 pst.setString(4, "2020-04-04");
                 pst.setString(5, user.getUsername());
 
-                pst.execute();
+                if(pst.execute())
+                {
+
+                }
 
                 System.out.println("ADDING USER SUCCESSFUL\n\n");
 
@@ -150,9 +153,34 @@ public class DatabaseManager {
     }
 
 
-    public List<User> getAllUser()
+    public static List<String> getAllUser()
     {
-        List <User> list = new ArrayList<User>();
+        List <String> list = new ArrayList<String>();
+
+        try {
+            String query = "SELECT userName "
+                        +  "FROM User "
+                        +  "WHERE userID > ?";
+
+            PreparedStatement pstmt  = instance.prepareStatement(query);
+
+            pstmt.setDouble(1, 1);
+
+            ResultSet rs  = pstmt.executeQuery();
+
+            while(rs.next())
+            {
+                list.add(rs.getString("userName"));
+            }
+
+            System.out.println("ABLE TO GET ALL REGISTERED USERS\n");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
         return list;
     }
 

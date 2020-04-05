@@ -25,16 +25,17 @@ public class Main extends Application {
         User Phillip = new User("JEEP",  "Hamptom", "Phillip", "Chan");
 
         DatabaseManager.getInstance();
-        DatabaseManager.addUser(Phillip);
-        Phillip.setUserID(DatabaseManager.getUserId(Phillip));
-        System.out.println(Phillip.getUserID());
-        Phillip.setUsername("GG");
-        Phillip.setLastName("DAM");
-        Phillip.setFirstName("Not Phillip");
-        System.out.println("GONNA UPDATE USER");
-        DatabaseManager.updateUser(Phillip);
-        DatabaseManager.deleteUser("BROLO");
-        DatabaseManager.deleteUser(3);
+        System.out.println(DatabaseManager.getAllUser());
+//        DatabaseManager.addUser(Phillip);
+//        Phillip.setUserID(DatabaseManager.getUserId(Phillip));
+//        System.out.println(Phillip.getUserID());
+//        Phillip.setUsername("GG");
+//        Phillip.setLastName("DAM");
+//        Phillip.setFirstName("Not Phillip");
+//        System.out.println("GONNA UPDATE USER");
+//        DatabaseManager.updateUser(Phillip);
+//        DatabaseManager.deleteUser("BROLO");
+//        DatabaseManager.deleteUser(3);
 
     }
 }
