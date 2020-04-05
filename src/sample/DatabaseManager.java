@@ -23,7 +23,7 @@ public class DatabaseManager {
                     try {
                         Class.forName("org.sqlite.JDBC");
                         instance = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
-                        System.out.println("Database Connection SUCCESSFUL");
+                        System.out.println("Database Connection SUCCESSFUL\n");
 
                     } catch (ClassNotFoundException | SQLException e) {
                         e.printStackTrace();
@@ -180,13 +180,44 @@ public class DatabaseManager {
         }
 
 
-
         return list;
     }
 
-    public List<User> getUsers(String filter)
+    public static List<String> getUsers(String status)
     {
-        List <User> users = new ArrayList<User>();
+        List <String> users = new ArrayList<String>();
+        String stat;
+
+        if("OFFLINE".equalsIgnoreCase(status))
+        {
+            stat = "OFFLINE";
+        }
+        else
+        {
+            stat = "ONLINE";
+        }
+
+        try {
+            String query = "SELECT userName "
+                    +  "FROM User "
+                    +  "WHERE status = ?";
+
+            PreparedStatement pstmt  = instance.prepareStatement(query);
+
+            pstmt.setString(1, stat);
+
+                    ResultSet rs  = pstmt.executeQuery();
+
+            while(rs.next())
+            {
+                users.add(rs.getString("userName"));
+            }
+
+            System.out.println("ABLE TO GET ALL " + stat +  " USERS\n");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return users;
     }

@@ -25,7 +25,7 @@ public class Main extends Application {
         User Phillip = new User("JEEP",  "Hamptom", "Phillip", "Chan");
 
         DatabaseManager.getInstance();
-        System.out.println(DatabaseManager.getAllUser());
+        System.out.println(DatabaseManager.getUsers("offline"));
 //        DatabaseManager.addUser(Phillip);
 //        Phillip.setUserID(DatabaseManager.getUserId(Phillip));
 //        System.out.println(Phillip.getUserID());
