@@ -46,8 +46,8 @@ public class DatabaseManager {
             synchronized (DatabaseManager.class)
             {
 
-                String query = "INSERT INTO User(fName,lName,password,dateCreated,userName)" +
-                               "VALUES (?,?,?,?,?)";
+                String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
+                               "VALUES (?,?,?,?,?,?)";
 
                 PreparedStatement pst = instance.prepareStatement(query);
 
@@ -56,6 +56,7 @@ public class DatabaseManager {
                 pst.setString(3, user.getPassword());
                 pst.setString(4, user.getCreation());
                 pst.setString(5, user.getUsername());
+                pst.setString(6, user.getStatus());
 
                 if(pst.execute())
                 {

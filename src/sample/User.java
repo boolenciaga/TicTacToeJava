@@ -12,6 +12,7 @@ public class User {
     private String firstName;
     private String lastName;
     private Date   created;
+    private String status;
 
     User(String username, String password, String firstName, String lastName, Date created)
     {
@@ -20,6 +21,7 @@ public class User {
         setFirstName(firstName);
         setLastName(lastName);
         setCreated(created);
+        setStatus("OFFLINE");
 
     }
 
@@ -51,6 +53,11 @@ public class User {
     public void setUserID(int id)
     {
         userID = id;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
     }
 
     public String [] getAll()
@@ -97,4 +104,8 @@ public class User {
         return strDate;
     }
 
+    public String getStatus()
+    {
+        return status;
+    }
 }
