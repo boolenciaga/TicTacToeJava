@@ -35,11 +35,7 @@
                   <Font size="15.0" />
                </font>
             </TextField>
-            <Label alignment="CENTER" layoutX="44.0" layoutY="21.0" prefHeight="50.0" prefWidth="512.0" text="ENTER USER INFORMATION" textFill="WHITE">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="191.0" layoutY="360.0" prefHeight="22.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: red;" textAlignment="CENTER" />
          </children>
       </Pane>
    </children>

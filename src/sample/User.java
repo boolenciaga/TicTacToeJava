@@ -1,5 +1,9 @@
 package sample;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class User {
 
     private int    userID;
@@ -7,13 +11,15 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private Date   created;
 
-    User(String username, String password, String firstName, String lastName)
+    User(String username, String password, String firstName, String lastName, Date created)
     {
         setUsername(username);
         setPassword(password);
         setFirstName(firstName);
         setLastName(lastName);
+        setCreated(created);
 
     }
 
@@ -35,6 +41,11 @@ public class User {
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+    public void setCreated(Date creation)
+    {
+        this.created = creation;
     }
 
     public void setUserID(int id)
@@ -79,5 +90,11 @@ public class User {
         return userID;
     }
 
+    public String getCreation()
+    {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(created);
+        return strDate;
+    }
 
 }

@@ -4,6 +4,7 @@ import javax.xml.transform.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+import  java.util.Date;
 
 public class DatabaseManager {
     private static Connection instance = null;
@@ -44,6 +45,7 @@ public class DatabaseManager {
         {
             synchronized (DatabaseManager.class)
             {
+
                 String query = "INSERT INTO User(fName,lName,password,dateCreated,userName)" +
                                "VALUES (?,?,?,?,?)";
 
@@ -52,7 +54,7 @@ public class DatabaseManager {
                 pst.setString(1, user.getFirstName());
                 pst.setString(2, user.getLastName());
                 pst.setString(3, user.getPassword());
-                pst.setString(4, "2020-04-04");
+                pst.setString(4, user.getCreation());
                 pst.setString(5, user.getUsername());
 
                 if(pst.execute())
