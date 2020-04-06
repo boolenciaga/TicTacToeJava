@@ -1,6 +1,9 @@
 package sample;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameViewers {
     private int gameId;
-    private int [] viewers;
+    List<User> viewers = new ArrayList<User>();
 }
