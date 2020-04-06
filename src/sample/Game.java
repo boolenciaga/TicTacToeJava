@@ -11,6 +11,6 @@ public class Game {
     private int starterId;
     private int winnerId;
 
-    
+
 
 }
