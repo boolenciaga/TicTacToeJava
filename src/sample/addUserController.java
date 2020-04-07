@@ -39,12 +39,11 @@ public class addUserController {
         {
             Date creation = Calendar.getInstance().getTime();
             User newUser = new User(username.getText(), password.getText(), firstName.getText(), lastName.getText(), creation);
-            DatabaseManager.getInstance();
             try {
-                DatabaseManager.addUser(newUser);
+                DatabaseManager.getInstance().addUser(newUser);
                 errorLabel.setTextFill(Color.LIMEGREEN);
                 errorLabel.setText("User successfully added.");
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 errorLabel.setTextFill(Color.RED);
                 errorLabel.setText("Username Already Taken. Try again.");
                 e.printStackTrace();

@@ -7,13 +7,15 @@ import java.sql.*;
 import  java.util.Date;
 
 public class DatabaseManager {
-    private static Connection instance = null;
+    private static DatabaseManager instance = null;
+
+    
 
     private DatabaseManager() {
 
     }
 
-    public static Connection getInstance()
+    public static DatabaseManager getInstance()
     {
         if (instance == null)
         {
@@ -21,14 +23,11 @@ public class DatabaseManager {
             {
                 if (instance == null)
                 {
-                    try {
-                        Class.forName("org.sqlite.JDBC");
-                        instance = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
-                        System.out.println("Database Connection SUCCESSFUL\n");
+                    instance = new DatabaseManager();
+                    // Class.forName("org.sqlite.JDBC");
 
-                    } catch (ClassNotFoundException | SQLException e) {
-                        e.printStackTrace();
-                    }
+                        //instance = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
+                        System.out.println("Database Connection SUCCESSFUL\n");
 
                     return instance;
 
@@ -40,16 +39,18 @@ public class DatabaseManager {
 
     }
 
-    public static boolean addUser(User user) throws SQLException {
+    public boolean addUser(User user) throws SQLException, ClassNotFoundException {
         if(instance != null)
         {
             synchronized (DatabaseManager.class)
             {
+                Class.forName("org.sqlite.JDBC");
+                Connection conn = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
 
                 String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
                                "VALUES (?,?,?,?,?,?)";
 
-                PreparedStatement pst = instance.prepareStatement(query);
+                PreparedStatement pst =  conn.prepareStatement(query);
 
                 pst.setString(1, user.getFirstName());
                 pst.setString(2, user.getLastName());
@@ -78,7 +79,7 @@ public class DatabaseManager {
         return true;
     }
 
-    public static boolean updateUser(User user)
+    public  boolean updateUser(User user)
     {
         if (instance != null)
         {
@@ -86,11 +87,14 @@ public class DatabaseManager {
             {
                 try {
 
+                    Class.forName("org.sqlite.JDBC");
+                    Connection conn = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
+
                     String query = "UPDATE  User " +
                             "SET userName = ? , password = ? , fName = ? , lName = ? " +
                             "WHERE userID = ?";
 
-                    PreparedStatement pst = instance.prepareStatement(query);
+                    PreparedStatement pst =  conn.prepareStatement(query);
 
                     pst.setString(1,user.getUsername());
                     pst.setString(2,user.getPassword());
@@ -110,6 +114,8 @@ public class DatabaseManager {
                     System.out.println("FAILED TO UPDATE USER");
                     e.printStackTrace();
 
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -117,13 +123,13 @@ public class DatabaseManager {
         return false;
     }
 
-    public static void deleteUser(String username)
+    public  void deleteUser(String username)
     {
         try {
 
             String query = "DELETE FROM USER " +
                            "WHERE userName = ?";
-            PreparedStatement pst = instance.prepareStatement(query);
+            PreparedStatement pst = ((Connection)instance).prepareStatement(query);
 
             pst.setString(1, username);
 
@@ -136,13 +142,15 @@ public class DatabaseManager {
         }
     }
 
-    public static void deleteUser(int id)
+    public  void deleteUser(int id)
     {
         try {
 
             String query = "DELETE FROM USER " +
                            "WHERE userID = ?";
-            PreparedStatement pst = instance.prepareStatement(query);
+
+
+            PreparedStatement pst =  ((Connection)instance).prepareStatement(query);
 
             pst.setInt(1, id);
 
@@ -156,7 +164,7 @@ public class DatabaseManager {
     }
 
 
-    public static List<String> getAllUser()
+    public  List<String> getAllUser()
     {
         List <String> list = new ArrayList<String>();
 
@@ -165,7 +173,7 @@ public class DatabaseManager {
                         +  "FROM User "
                         +  "WHERE userID > ?";
 
-            PreparedStatement pstmt  = instance.prepareStatement(query);
+            PreparedStatement pstmt  =  ((Connection)instance).prepareStatement(query);
 
             pstmt.setDouble(1, 1);
 
@@ -186,7 +194,7 @@ public class DatabaseManager {
         return list;
     }
 
-    public static List<String> getUsers(String status)
+    public  List<String> getUsers(String status)
     {
         List <String> users = new ArrayList<String>();
         String stat;
@@ -205,7 +213,7 @@ public class DatabaseManager {
                     +  "FROM User "
                     +  "WHERE status = ?";
 
-            PreparedStatement pstmt  = instance.prepareStatement(query);
+            PreparedStatement pstmt  =  ((Connection)instance).prepareStatement(query);
 
             pstmt.setString(1, stat);
 
@@ -225,7 +233,7 @@ public class DatabaseManager {
         return users;
     }
 
-    public static int getUserId(User user) {
+    public  int getUserId(User user) {
         int id = 0;
 
         try {
@@ -233,7 +241,7 @@ public class DatabaseManager {
                            "FROM User " +
                            "WHERE userName = ?";
 
-            PreparedStatement pstmt  =  instance.prepareStatement(query);
+            PreparedStatement pstmt  =   ((Connection)instance).prepareStatement(query);
 
             pstmt.setString(1, user.getUsername());
 
