@@ -8,10 +8,19 @@ import  java.util.Date;
 
 public class DatabaseManager {
     private static DatabaseManager instance = null;
+    private Connection connection;
 
-    
+    public Connection getConnection() {
+        return connection;
+    }
 
-    private DatabaseManager() {
+    private DatabaseManager() throws SQLException {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -23,9 +32,12 @@ public class DatabaseManager {
             {
                 if (instance == null)
                 {
-                    instance = new DatabaseManager();
+                    try {
+                        instance = new DatabaseManager();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     // Class.forName("org.sqlite.JDBC");
-
                         //instance = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
                         System.out.println("Database Connection SUCCESSFUL\n");
 
@@ -44,13 +56,11 @@ public class DatabaseManager {
         {
             synchronized (DatabaseManager.class)
             {
-                Class.forName("org.sqlite.JDBC");
-                Connection conn = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
 
                 String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
                                "VALUES (?,?,?,?,?,?)";
 
-                PreparedStatement pst =  conn.prepareStatement(query);
+                PreparedStatement pst =  getConnection().prepareStatement(query);
 
                 pst.setString(1, user.getFirstName());
                 pst.setString(2, user.getLastName());
@@ -87,14 +97,11 @@ public class DatabaseManager {
             {
                 try {
 
-                    Class.forName("org.sqlite.JDBC");
-                    Connection conn = DriverManager.getConnection("jdbc:sqlite:Database\\TicTacToeDB.db");
-
                     String query = "UPDATE  User " +
                             "SET userName = ? , password = ? , fName = ? , lName = ? " +
                             "WHERE userID = ?";
 
-                    PreparedStatement pst =  conn.prepareStatement(query);
+                    PreparedStatement pst =  getConnection().prepareStatement(query);
 
                     pst.setString(1,user.getUsername());
                     pst.setString(2,user.getPassword());
@@ -114,8 +121,6 @@ public class DatabaseManager {
                     System.out.println("FAILED TO UPDATE USER");
                     e.printStackTrace();
 
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -129,7 +134,7 @@ public class DatabaseManager {
 
             String query = "DELETE FROM USER " +
                            "WHERE userName = ?";
-            PreparedStatement pst = ((Connection)instance).prepareStatement(query);
+            PreparedStatement pst = getConnection().prepareStatement(query);
 
             pst.setString(1, username);
 
@@ -150,7 +155,7 @@ public class DatabaseManager {
                            "WHERE userID = ?";
 
 
-            PreparedStatement pst =  ((Connection)instance).prepareStatement(query);
+            PreparedStatement pst =  getConnection().prepareStatement(query);
 
             pst.setInt(1, id);
 
@@ -173,7 +178,7 @@ public class DatabaseManager {
                         +  "FROM User "
                         +  "WHERE userID > ?";
 
-            PreparedStatement pstmt  =  ((Connection)instance).prepareStatement(query);
+            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
 
             pstmt.setDouble(1, 1);
 
@@ -213,7 +218,7 @@ public class DatabaseManager {
                     +  "FROM User "
                     +  "WHERE status = ?";
 
-            PreparedStatement pstmt  =  ((Connection)instance).prepareStatement(query);
+            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
 
             pstmt.setString(1, stat);
 
@@ -241,7 +246,7 @@ public class DatabaseManager {
                            "FROM User " +
                            "WHERE userName = ?";
 
-            PreparedStatement pstmt  =   ((Connection)instance).prepareStatement(query);
+            PreparedStatement pstmt  =   getConnection().prepareStatement(query);
 
             pstmt.setString(1, user.getUsername());
 
