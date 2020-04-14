@@ -50,123 +50,123 @@ public class DatabaseManager implements DataSource {
         return instance;
 
     }
-
-    public boolean addUser(User user) throws SQLException, ClassNotFoundException {
-        if(instance != null)
-        {
-            synchronized (DatabaseManager.class)
-            {
-
-                String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
-                               "VALUES (?,?,?,?,?,?)";
-
-                PreparedStatement pst =  getConnection().prepareStatement(query);
-
-                pst.setString(1, user.getFirstName());
-                pst.setString(2, user.getLastName());
-                pst.setString(3, user.getPassword());
-                pst.setString(4, user.getCreation());
-                pst.setString(5, user.getUsername());
-                pst.setString(6, user.getStatus());
-
-                if(pst.execute())
-                {
-
-                }
-
-                System.out.println("ADDING USER SUCCESSFUL\n\n");
-
-
-                pst.close();
-            }
-        }
-        else
-        {
-            System.out.println("Add query failed.");
-            return false;
-        }
-
-        return true;
-    }
-
-    public  boolean updateUser(User user)
-    {
-        if (instance != null)
-        {
-            synchronized (DatabaseManager.class)
-            {
-                try {
-
-                    String query = "UPDATE  User " +
-                            "SET userName = ? , password = ? , fName = ? , lName = ? " +
-                            "WHERE userID = ?";
-
-                    PreparedStatement pst =  connection.prepareStatement(query);
-
-                    pst.setString(1,user.getUsername());
-                    pst.setString(2,user.getPassword());
-                    pst.setString(3,user.getFirstName());
-                    pst.setString(4,user.getLastName());
-                    pst.setInt(5, user.getId());
-
-                    pst.executeUpdate();
-
-                    pst.close();
-
-                    System.out.println("UPDATED USER");
-
-                    return true;
-
-                } catch (SQLException e) {
-                    System.out.println("FAILED TO UPDATE USER");
-                    e.printStackTrace();
-
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public void deleteUser(String username)
-    {
-        try {
-
-            String query = "DELETE FROM USER " +
-                           "WHERE userName = ?";
-            PreparedStatement pst = getConnection().prepareStatement(query);
-
-            pst.setString(1, username);
-
-            pst.executeUpdate();
-
-            System.out.println("DELETED " + username + "!!!\n");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public  void deleteUser(int id)
-    {
-        try {
-
-            String query = "DELETE FROM USER " +
-                           "WHERE userID = ?";
-
-
-            PreparedStatement pst =  getConnection().prepareStatement(query);
-
-            pst.setInt(1, id);
-
-            pst.executeUpdate();
-
-            System.out.println("DELETED ID# " + id + "!!!\n");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    public boolean addUser(User user) throws SQLException, ClassNotFoundException {
+//        if(instance != null)
+//        {
+//            synchronized (DatabaseManager.class)
+//            {
+//
+//                String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
+//                               "VALUES (?,?,?,?,?,?)";
+//
+//                PreparedStatement pst =  getConnection().prepareStatement(query);
+//
+//                pst.setString(1, user.getFirstName());
+//                pst.setString(2, user.getLastName());
+//                pst.setString(3, user.getPassword());
+//                pst.setString(4, user.getCreation());
+//                pst.setString(5, user.getUsername());
+//                pst.setString(6, user.getStatus());
+//
+//                if(pst.execute())
+//                {
+//
+//                }
+//
+//                System.out.println("ADDING USER SUCCESSFUL\n\n");
+//
+//
+//                pst.close();
+//            }
+//        }
+//        else
+//        {
+//            System.out.println("Add query failed.");
+//            return false;
+//        }
+//
+//        return true;
+//    }
+//
+//    public  boolean updateUser(User user)
+//    {
+//        if (instance != null)
+//        {
+//            synchronized (DatabaseManager.class)
+//            {
+//                try {
+//
+//                    String query = "UPDATE  User " +
+//                            "SET userName = ? , password = ? , fName = ? , lName = ? " +
+//                            "WHERE userID = ?";
+//
+//                    PreparedStatement pst =  connection.prepareStatement(query);
+//
+//                    pst.setString(1,user.getUsername());
+//                    pst.setString(2,user.getPassword());
+//                    pst.setString(3,user.getFirstName());
+//                    pst.setString(4,user.getLastName());
+//                    pst.setInt(5, user.getId());
+//
+//                    pst.executeUpdate();
+//
+//                    pst.close();
+//
+//                    System.out.println("UPDATED USER");
+//
+//                    return true;
+//
+//                } catch (SQLException e) {
+//                    System.out.println("FAILED TO UPDATE USER");
+//                    e.printStackTrace();
+//
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    public void deleteUser(String username)
+//    {
+//        try {
+//
+//            String query = "DELETE FROM USER " +
+//                           "WHERE userName = ?";
+//            PreparedStatement pst = getConnection().prepareStatement(query);
+//
+//            pst.setString(1, username);
+//
+//            pst.executeUpdate();
+//
+//            System.out.println("DELETED " + username + "!!!\n");
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public  void deleteUser(int id)
+//    {
+//        try {
+//
+//            String query = "DELETE FROM USER " +
+//                           "WHERE userID = ?";
+//
+//
+//            PreparedStatement pst =  getConnection().prepareStatement(query);
+//
+//            pst.setInt(1, id);
+//
+//            pst.executeUpdate();
+//
+//            System.out.println("DELETED ID# " + id + "!!!\n");
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     public  List<String> getAllUser()
@@ -347,43 +347,58 @@ public class DatabaseManager implements DataSource {
         }
     }
 
-    /*
-         String query = "UPDATE  User " +
-        "SET userName = ? , password = ? , fName = ? , lName = ? " +
-         "WHERE userID = ?";
-
-        PreparedStatement pst =  connection.prepareStatement(query);
-
-        pst.setString(1,user.getUsername());
-        pst.setString(2,user.getPassword());
-        pst.setString(3,user.getFirstName());
-        pst.setString(4,user.getLastName());
-        pst.setInt(5, user.getId());
-
-        pst.executeUpdate();
-
-        pst.close();
-
-        System.out.println("UPDATED USER");
-
-        return true;
-
-    } catch (SQLException e) {
-        System.out.println("FAILED TO UPDATE USER");
-        e.printStackTrace();
-
-     */
-
-
     @Override
     public BaseModel get(int id) {
         return null;
     }
 
     @Override
-    public List<BaseModel> list(BaseModel Obj) {
-        return null;
+    public List <BaseModel> list(BaseModel obj) {
+        List <BaseModel> list = new ArrayList<>();
+
+        if(obj instanceof User) {
+
+            String query = "SELECT userName "
+                        +  "FROM User "
+                        +  "WHERE userID > 1";
+
+            try {
+                ResultSet rs = executeQuery(query);
+                while(rs.next())
+                {
+                    User u = new User(rs.getString("userName"));
+                    list.add(u);
+                }
+
+                System.out.println("Got all QUERY \n\n");
+
+            } catch (SQLException e) {
+                System.out.println("Error Get All Query");
+                e.printStackTrace();
+            }
+        }
+        else if (obj instanceof Game)
+        {
+
+        }
+
+        return list;
     }
+
+
+
+    /*
+             PreparedStatement pstmt  =  getConnection().prepareStatement(query);
+
+            pstmt.setDouble(1, 1);
+
+            ResultSet rs  = pstmt.executeQuery();
+
+            while(rs.next())
+            {
+                list.add(rs.getString("userName"));
+            }
+     */
 
     @Override
     public List<BaseModel> query(BaseModel obj, String filter) {
@@ -417,7 +432,9 @@ public class DatabaseManager implements DataSource {
 
     private ResultSet executeQuery(String query) throws SQLException {
 
-        ResultSet rs = null;
+        PreparedStatement pstmt  =  connection.prepareStatement(query);
+        ResultSet rs  = pstmt.executeQuery();
         return rs;
+
     }
 }

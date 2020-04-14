@@ -14,7 +14,7 @@ public class User extends BaseModel{
     private Date   created;
     private String status;
 
-    User(String username, String password, String firstName, String lastName, Date created)
+    public User(String username, String password, String firstName, String lastName, Date created)
     {
         setUsername(username);
         setPassword(password);
@@ -23,6 +23,11 @@ public class User extends BaseModel{
         setCreated(created);
         setStatus("OFFLINE");
 
+    }
+
+    public User(String username)
+    {
+        setUsername(username);
     }
 
     public void setUsername(String username)
