@@ -128,7 +128,7 @@ public class DatabaseManager implements DataSource {
         return false;
     }
 
-    public  void deleteUser(String username)
+    public void deleteUser(String username)
     {
         try {
 
@@ -265,32 +265,6 @@ public class DatabaseManager implements DataSource {
         return id;
     }
 
-    /*
-          String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
-                               "VALUES (?,?,?,?,?,?)";
-
-                PreparedStatement pst =  getConnection().prepareStatement(query);
-
-                pst.setString(1, user.getFirstName());
-                pst.setString(2, user.getLastName());
-                pst.setString(3, user.getPassword());
-                pst.setString(4, user.getCreation());
-                pst.setString(5, user.getUsername());
-                pst.setString(6, user.getStatus());
-
-                if(pst.execute())
-                {
-
-                }
-
-                System.out.println("ADDING USER SUCCESSFUL\n\n");
-
-
-                pst.close();
-
-     */
-
-
     @Override
     public BaseModel insert(BaseModel obj) {
         StringBuilder qryBuilder = new StringBuilder();
@@ -307,9 +281,9 @@ public class DatabaseManager implements DataSource {
         }
         else if(obj instanceof Game)
         {
-            Game g = (Game) obj;
-
-            qryBuilder.append();
+//            Game g = (Game) obj;
+//
+//            qryBuilder.append();
         }
 
         try {
@@ -325,8 +299,29 @@ public class DatabaseManager implements DataSource {
 
     @Override
     public BaseModel delete(BaseModel obj) {
-        return null;
+        StringBuilder qryBuilder = new StringBuilder();
+        qryBuilder.append("DELETE FROM ");
+
+        if(obj instanceof User)
+        {
+            User u = (User) obj;
+
+            qryBuilder.append("USER " +
+                              "WHERE userName = \'" + u.getUsername() + "\'");
+        }
+
+        try {
+            executeDelete(qryBuilder.toString());
+            System.out.println("DELETED SUCCESS\n\n");
+            return null;
+        } catch (SQLException e) {
+            System.out.println("DELETED FAIL\n\n");
+            e.printStackTrace();
+            return obj;
+        }
+
     }
+
 
     @Override
     public BaseModel update(BaseModel obj) {
@@ -348,33 +343,32 @@ public class DatabaseManager implements DataSource {
         return null;
     }
 
-    private boolean executeInsert(String query) throws SQLException {
+    private void executeInsert(String query) throws SQLException {
 
-        boolean success = false;
         PreparedStatement pst = connection.prepareStatement(query);
 
         if(pst.execute())
         {
             System.out.println("INSERTING SUCCESSFUL\n\n");
-            success = true;
         }
 
         pst.close();
-        return success;
+    }
+
+    private void executeDelete(String query) throws SQLException {
+        boolean success = false;
+
+        PreparedStatement pst = connection.prepareStatement(query);
+        pst.executeUpdate();
 
     }
 
-    private void executeDelete(String query, BaseModel obj)
+    private void executeUpdate(String query)
     {
 
     }
 
-    private void executeUpdate(String query, BaseModel obj)
-    {
-
-    }
-
-    private ResultSet executeQuery(String query, BaseModel obj) throws SQLException {
+    private ResultSet executeQuery(String query) throws SQLException {
             PreparedStatement pst = null;
 
 

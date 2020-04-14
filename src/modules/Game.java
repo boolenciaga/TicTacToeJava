@@ -13,7 +13,11 @@ public class Game extends BaseModel {
     private int starterId;
     private int winnerId;
 
-    public Game() {
+    public Game(int p1) {
+        startTime = "";
+        endTime   = "";
+        setP1Id(p1);
+        setStarterId(p1);
 
     }
 
@@ -22,15 +26,19 @@ public class Game extends BaseModel {
     }
 
     public void setEndTime() {
-        Date created = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        endTime = dateFormat.format(created);
+        Date ended = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        endTime = dateFormat.format(ended);
+    }
+
+    public String getStartTime() {
+        return startTime;
     }
 
     public void setStartTime() {
-        Date created = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        startTime = dateFormat.format(created);
+        Date started = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        startTime = dateFormat.format(started);
     }
 
     public int getP1Id() {
@@ -64,4 +72,6 @@ public class Game extends BaseModel {
     public void setWinnerId(int winnerId) {
         this.winnerId = winnerId;
     }
+
+
 }
