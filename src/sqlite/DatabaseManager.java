@@ -1,7 +1,6 @@
 package sqlite;
 
-import modules.BaseModel;
-import modules.User;
+import modules.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +101,7 @@ public class DatabaseManager implements DataSource {
                             "SET userName = ? , password = ? , fName = ? , lName = ? " +
                             "WHERE userID = ?";
 
-                    PreparedStatement pst =  getConnection().prepareStatement(query);
+                    PreparedStatement pst =  connection.prepareStatement(query);
 
                     pst.setString(1,user.getUsername());
                     pst.setString(2,user.getPassword());
@@ -299,11 +298,29 @@ public class DatabaseManager implements DataSource {
 
         if(obj instanceof User)
         {
+            User u = (User) obj;
+
             qryBuilder.append("User (fName,lName,password,dateCreated,userName,status) " +
-                              "VALUES (?,?,?,?,?,?)");
+                              "VALUES (" +  u.getFirstName() + ',' + u.getLastName() + ',' + u.getPassword() + ',' +
+                              u.getCreation() + ',' + u.getStatus() + ')' );
+
+        }
+        else if(obj instanceof Game)
+        {
+            Game g = (Game) obj;
+
+            qryBuilder.append();
         }
 
-        return null;
+        try {
+            executeInsert(qryBuilder.toString());
+            return null;
+        } catch (SQLException e) {
+            System.out.println("error executing insert\n\n");
+            e.printStackTrace();
+            return obj;
+        }
+
     }
 
     @Override
@@ -331,25 +348,37 @@ public class DatabaseManager implements DataSource {
         return null;
     }
 
-    private void executeInsert(String query)
+    private boolean executeInsert(String query) throws SQLException {
+
+        boolean success = false;
+        PreparedStatement pst = connection.prepareStatement(query);
+
+        if(pst.execute())
+        {
+            System.out.println("INSERTING SUCCESSFUL\n\n");
+            success = true;
+        }
+
+        pst.close();
+        return success;
+
+    }
+
+    private void executeDelete(String query, BaseModel obj)
     {
 
     }
 
-    private void executeDelete(String query)
+    private void executeUpdate(String query, BaseModel obj)
     {
 
     }
 
-    private void executeUpdate(String query)
-    {
+    private ResultSet executeQuery(String query, BaseModel obj) throws SQLException {
+            PreparedStatement pst = null;
 
-    }
 
-    private ResultSet executeQuery(String query) throws SQLException {
-            PreparedStatement pstmt = null;
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs;
+        ResultSet rs;
+        return rs;
     }
 }
