@@ -1,4 +1,4 @@
-package sample;
+package app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("addUserWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../app/addUserWindow.fxml"));
         primaryStage.setTitle("Add User Record Window");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

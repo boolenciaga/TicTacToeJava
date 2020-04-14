@@ -1,4 +1,4 @@
-package sql;
+package sqlite;
 import modules.BaseModel;
 
 import java.util.List;
