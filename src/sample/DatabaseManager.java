@@ -1,12 +1,13 @@
-package sample;
+package sql;
 
-import javax.xml.transform.Result;
+import modules.BaseModel;
+import modules.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import  java.util.Date;
 
-public class DatabaseManager {
+public class DatabaseManager implements DataSource {
     private static DatabaseManager instance = null;
     private Connection connection;
 
@@ -107,7 +108,7 @@ public class DatabaseManager {
                     pst.setString(2,user.getPassword());
                     pst.setString(3,user.getFirstName());
                     pst.setString(4,user.getLastName());
-                    pst.setInt(5, user.getUserID());
+                    pst.setInt(5, user.getId());
 
                     pst.executeUpdate();
 
@@ -265,5 +266,90 @@ public class DatabaseManager {
         return id;
     }
 
+    /*
+          String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
+                               "VALUES (?,?,?,?,?,?)";
 
+                PreparedStatement pst =  getConnection().prepareStatement(query);
+
+                pst.setString(1, user.getFirstName());
+                pst.setString(2, user.getLastName());
+                pst.setString(3, user.getPassword());
+                pst.setString(4, user.getCreation());
+                pst.setString(5, user.getUsername());
+                pst.setString(6, user.getStatus());
+
+                if(pst.execute())
+                {
+
+                }
+
+                System.out.println("ADDING USER SUCCESSFUL\n\n");
+
+
+                pst.close();
+
+     */
+
+
+    @Override
+    public BaseModel insert(BaseModel obj) {
+        StringBuilder qryBuilder = new StringBuilder();
+        qryBuilder.append("INSERT INTO ");
+
+        if(obj instanceof User)
+        {
+            qryBuilder.append("User (fName,lName,password,dateCreated,userName,status) " +
+                              "VALUES (?,?,?,?,?,?)");
+        }
+
+        return null;
+    }
+
+    @Override
+    public BaseModel delete(BaseModel obj) {
+        return null;
+    }
+
+    @Override
+    public BaseModel update(BaseModel obj) {
+        return null;
+    }
+
+    @Override
+    public BaseModel get(int id) {
+        return null;
+    }
+
+    @Override
+    public List<BaseModel> list(BaseModel Obj) {
+        return null;
+    }
+
+    @Override
+    public List<BaseModel> query(BaseModel obj, String filter) {
+        return null;
+    }
+
+    private void executeInsert(String query)
+    {
+
+    }
+
+    private void executeDelete(String query)
+    {
+
+    }
+
+    private void executeUpdate(String query)
+    {
+
+    }
+
+    private ResultSet executeQuery(String query) throws SQLException {
+            PreparedStatement pstmt = null;
+            ResultSet rs = pstmt.executeQuery();
+
+            return rs;
+    }
 }
