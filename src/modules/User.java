@@ -4,7 +4,7 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class User {
+public class User extends BaseModel{
 
     private int    userID;
     private String username;

@@ -2,8 +2,8 @@ package modules;
 
 import java.util.Date;
 
-public class Game {
-    private int  gameId;
+public class Game extends BaseModel {
+//    private int  gameId;
     private Date startTime;
     private Date endTime;
     private int  p1Id;
