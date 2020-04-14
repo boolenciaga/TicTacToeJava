@@ -306,7 +306,7 @@ public class DatabaseManager implements DataSource {
         {
             User u = (User) obj;
 
-            qryBuilder.append("USER " +
+            qryBuilder.append("User " +
                               "WHERE userName = \'" + u.getUsername() + "\'");
         }
 
@@ -325,8 +325,55 @@ public class DatabaseManager implements DataSource {
 
     @Override
     public BaseModel update(BaseModel obj) {
-        return null;
+        StringBuilder qryBuilder = new StringBuilder();
+        qryBuilder.append("UPDATE ");
+
+        if(obj instanceof User)
+        {
+            User u = (User) obj;
+
+            qryBuilder.append("User " +
+                              "SET userName = \'" + u.getUsername()  + "\', password = \'" + u.getPassword() + "\', fName = \'"
+                                                  + u.getFirstName() + "\', lName = \'"    + u.getLastName() + "\' " +
+                              "WHERE userID = \'" + u.getUserID() + "\'");
+        }
+
+        try {
+            executeUpdate(qryBuilder.toString());
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return obj;
+        }
     }
+
+    /*
+         String query = "UPDATE  User " +
+        "SET userName = ? , password = ? , fName = ? , lName = ? " +
+         "WHERE userID = ?";
+
+        PreparedStatement pst =  connection.prepareStatement(query);
+
+        pst.setString(1,user.getUsername());
+        pst.setString(2,user.getPassword());
+        pst.setString(3,user.getFirstName());
+        pst.setString(4,user.getLastName());
+        pst.setInt(5, user.getId());
+
+        pst.executeUpdate();
+
+        pst.close();
+
+        System.out.println("UPDATED USER");
+
+        return true;
+
+    } catch (SQLException e) {
+        System.out.println("FAILED TO UPDATE USER");
+        e.printStackTrace();
+
+     */
+
 
     @Override
     public BaseModel get(int id) {
@@ -356,23 +403,21 @@ public class DatabaseManager implements DataSource {
     }
 
     private void executeDelete(String query) throws SQLException {
-        boolean success = false;
 
         PreparedStatement pst = connection.prepareStatement(query);
         pst.executeUpdate();
 
     }
 
-    private void executeUpdate(String query)
-    {
+    private void executeUpdate(String query) throws SQLException {
+        PreparedStatement pst =  connection.prepareStatement(query);
+        pst.executeUpdate();
 
     }
 
     private ResultSet executeQuery(String query) throws SQLException {
-            PreparedStatement pst = null;
 
-
-        ResultSet rs;
+        ResultSet rs = null;
         return rs;
     }
 }
