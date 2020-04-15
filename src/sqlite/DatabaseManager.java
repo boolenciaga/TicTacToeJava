@@ -439,6 +439,35 @@ public class DatabaseManager implements DataSource {
             }
 
         }
+        else if (obj instanceof Game)
+        {
+            Game g = (Game) obj;
+
+            qryBuilder.append("* " +
+                              "FROM Game " +
+                              "WHERE starterID = \'" + filter + "\'");
+
+            try {
+                ResultSet rs = executeQuery(qryBuilder.toString());
+
+                while(rs.next())
+                {
+                    Game game = new Game(Integer.parseInt(rs.getString("id")), rs.getString("startTime"),
+                                         rs.getString("endTime"), Integer.parseInt(rs.getString("p1Id")),
+                                        Integer.parseInt(rs.getString("p2Id")),
+                                        Integer.parseInt(rs.getString("starterId")),Integer.parseInt(rs.getString("winnerId")));
+                    list.add(game);
+                }
+
+                System.out.println("Got all QUERY \n\n");
+
+            } catch (SQLException e) {
+                System.out.println("Error Get All Query");
+                e.printStackTrace();
+                return null;
+            }
+
+        }
 
 
         return list;

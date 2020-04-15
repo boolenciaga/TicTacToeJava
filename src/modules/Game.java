@@ -14,12 +14,22 @@ public class Game extends BaseModel {
     private int starterId;
     private int winnerId;
 
-    public Game(int p1) {
+    Game(int p1) {
         startTime = "";
         endTime   = "";
         setP1Id(p1);
         setStarterId(p1);
 
+    }
+
+    public Game(int gameId, String sTime, String eTime, int p1, int p2, int starter, int winner)
+    {
+        setId(gameId);
+        recallTimes(sTime,eTime);
+        setP1Id(p1);
+        setP2Id(p2);
+        setStarterId(starter);
+        setWinnerId(winner);
     }
 
     public String getEndTime() {
@@ -72,6 +82,12 @@ public class Game extends BaseModel {
 
     public void setWinnerId(int winnerId) {
         this.winnerId = winnerId;
+    }
+
+    public void recallTimes(String sTime, String eTime)
+    {
+        startTime = sTime;
+        endTime   = eTime;
     }
 
 
