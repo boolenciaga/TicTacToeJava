@@ -2,6 +2,7 @@ package modules;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Game extends BaseModel {
@@ -26,7 +27,7 @@ public class Game extends BaseModel {
     }
 
     public void setEndTime() {
-        Date ended = new Date();
+        Date ended = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
         endTime = dateFormat.format(ended);
     }
@@ -36,7 +37,7 @@ public class Game extends BaseModel {
     }
 
     public void setStartTime() {
-        Date started = new Date();
+        Date started = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
         startTime = dateFormat.format(started);
     }

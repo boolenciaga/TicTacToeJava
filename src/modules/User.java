@@ -1,5 +1,6 @@
 package modules;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,18 +12,17 @@ public class User extends BaseModel{
     private String password;
     private String firstName;
     private String lastName;
-    private Date   created;
+    private String created;
     private String status;
 
-    public User(String username, String password, String firstName, String lastName, Date created)
+    public User(String username, String password, String firstName, String lastName)
     {
         setUsername(username);
         setPassword(password);
         setFirstName(firstName);
         setLastName(lastName);
-        setCreated(created);
         setStatus("OFFLINE");
-
+        setCreated();
     }
 
     public User(String username)
@@ -50,9 +50,12 @@ public class User extends BaseModel{
         this.lastName = lastName;
     }
 
-    public void setCreated(Date creation)
+    public void setCreated()
     {
-        this.created = creation;
+        Date creation = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        created = dateFormat.format(creation);
+        System.out.println(dateFormat.format(creation));
     }
 
     public void setUserID(int id)
@@ -104,9 +107,7 @@ public class User extends BaseModel{
 
     public String getCreation()
     {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(created);
-        return strDate;
+        return created;
     }
 
     public String getStatus()

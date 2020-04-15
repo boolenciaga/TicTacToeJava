@@ -275,9 +275,8 @@ public class DatabaseManager implements DataSource {
             User u = (User) obj;
 
             qryBuilder.append("User (fName,lName,password,dateCreated,userName,status) " +
-                              "VALUES (" +  u.getFirstName() + ',' + u.getLastName() + ',' + u.getPassword() + ',' +
-                              u.getCreation() + ',' + u.getStatus() + ')' );
-
+                              "VALUES (\'" +  u.getFirstName() + "\', \'" + u.getLastName() + "\', \'" + u.getPassword() + "\', \'" +
+                              u.getCreation() + "\', \'" + u.getUsername() + "\', \'" + u.getStatus() + "\')" );
         }
         else if(obj instanceof Game)
         {
@@ -288,6 +287,7 @@ public class DatabaseManager implements DataSource {
 
         try {
             executeInsert(qryBuilder.toString());
+            System.out.println("Insertion worked\n\n");
             return null;
         } catch (SQLException e) {
             System.out.println("error executing insert\n\n");
@@ -307,7 +307,7 @@ public class DatabaseManager implements DataSource {
             User u = (User) obj;
 
             qryBuilder.append("User " +
-                              "WHERE userName = \'" + u.getUsername() + "\'");
+                              "WHERE userID = \'" + u.getUserID() + "\'");
         }
 
         try {
@@ -340,9 +340,11 @@ public class DatabaseManager implements DataSource {
 
         try {
             executeUpdate(qryBuilder.toString());
+            System.out.println("UPDATE QUERY Successful\n\n");
             return null;
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("UNABLE to update QUERY");
             return obj;
         }
     }
@@ -360,10 +362,12 @@ public class DatabaseManager implements DataSource {
 
             String query = "SELECT userName "
                         +  "FROM User "
-                        +  "WHERE userID > 1";
+                        +  "WHERE userID > 1 "
+                        +  "AND  status != 'DELETED' ";
 
             try {
                 ResultSet rs = executeQuery(query);
+
                 while(rs.next())
                 {
                     User u = new User(rs.getString("userName"));
@@ -386,20 +390,6 @@ public class DatabaseManager implements DataSource {
     }
 
 
-
-    /*
-             PreparedStatement pstmt  =  getConnection().prepareStatement(query);
-
-            pstmt.setDouble(1, 1);
-
-            ResultSet rs  = pstmt.executeQuery();
-
-            while(rs.next())
-            {
-                list.add(rs.getString("userName"));
-            }
-     */
-
     @Override
     public List<BaseModel> query(BaseModel obj, String filter) {
         return null;
@@ -408,12 +398,7 @@ public class DatabaseManager implements DataSource {
     private void executeInsert(String query) throws SQLException {
 
         PreparedStatement pst = connection.prepareStatement(query);
-
-        if(pst.execute())
-        {
-            System.out.println("INSERTING SUCCESSFUL\n\n");
-        }
-
+        pst.execute();
         pst.close();
     }
 

@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import modules.User;
+import sqlite.DatabaseManager;
+
 import java.sql.SQLException;
 
 
@@ -20,20 +23,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SQLException {
-       // User Phillip = new User("JEEP",  "Hamptom", "Phillip", "Chan");
         launch(args);
-
-        //System.out.println(DatabaseManager.getUsers("offline"));
-//        DatabaseManager.addUser(Phillip);
-//        Phillip.setUserID(DatabaseManager.getUserId(Phillip));
-//        System.out.println(Phillip.getUserID());
-//        Phillip.setUsername("GG");
-//        Phillip.setLastName("DAM");
-//        Phillip.setFirstName("Not Phillip");
-//        System.out.println("GONNA UPDATE USER");
-//        DatabaseManager.updateUser(Phillip);
-//        DatabaseManager.deleteUser("BROLO");
-//        DatabaseManager.deleteUser(3);
 
     }
 }
