@@ -24,4 +24,27 @@ public class Moves  extends BaseModel{
         return strDate;
     }
 
+    public void setYcoord(int ycoord) {
+        Ycoord = ycoord;
+    }
+
+    public void setXcoord(int xcoord) {
+        Xcoord = xcoord;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public int getXcoord() {
+        return Xcoord;
+    }
+
+    public int getYcoord() {
+        return Ycoord;
+    }
 }
