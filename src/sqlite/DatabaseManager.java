@@ -292,7 +292,6 @@ public class DatabaseManager implements DataSource {
             qryBuilder.append("Moves (id,gameId,playerId,X_coord,Y_coord,time) " +
                               "VALUES (" + m.getId() + ", " + m.getGameId() +  ", " + m.getPlayerId() + ", " + m.getXcoord()
                                          + ", " + m.getYcoord() + ", \'" + m.getTime() + "\')" );
-
         }
         else if(obj instanceof GameViewers)
         {
@@ -352,7 +351,8 @@ public class DatabaseManager implements DataSource {
 
             qryBuilder.append("User " +
                               "SET userName = \'" + u.getUsername()  + "\', password = \'" + u.getPassword() + "\', fName = \'"
-                                                  + u.getFirstName() + "\', lName = \'"    + u.getLastName() + "\' " +
+                                                  + u.getFirstName() + "\', lName = \'"    + u.getLastName() + "\', status = \'"
+                                                  + u.getStatus()    + "\' "               +
                               "WHERE userID = \'" + u.getUserID() + "\'");
         }
 
