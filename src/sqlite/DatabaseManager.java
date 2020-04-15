@@ -282,17 +282,24 @@ public class DatabaseManager implements DataSource {
         {
             Game g = (Game) obj;
 
-            qryBuilder.append("User (id,p1Id,starterId) " +
+            qryBuilder.append("Game (id,p1Id,starterId) " +
                               "VALUES (" + g.getId() + ", " + g.getP1Id() + ", " + g.getStarterId() + ')');
         }
         else if(obj instanceof Moves)
         {
             Moves m = (Moves) obj;
 
-            qryBuilder.append("User (id,gameId,playerId,X_coord,Y_coord,time) " +
-                              "VALUES (" + m.getId() + ", " + m.getGameId() + ", " + m.getXcoord() + ", " + m.getYcoord()
-                                         + ", \'" + m.getTime() + "\'" );
+            qryBuilder.append("Moves (id,gameId,playerId,X_coord,Y_coord,time) " +
+                              "VALUES (" + m.getId() + ", " + m.getGameId() +  ", " + m.getPlayerId() + ", " + m.getXcoord()
+                                         + ", " + m.getYcoord() + ", \'" + m.getTime() + "\')" );
 
+        }
+        else if(obj instanceof GameViewers)
+        {
+            GameViewers gv = (GameViewers) obj;
+
+            qryBuilder.append("GameViewers (gameId,viewerId) " +
+                              "VALUES (" + gv.getGameId() + ", " + gv.getId() + ')');
         }
 
         try {

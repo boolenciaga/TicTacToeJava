@@ -68,18 +68,6 @@ public class User extends BaseModel{
         this.status = status;
     }
 
-    public String [] getAll()
-    {
-        String [] info = new String [4];
-
-        info[0] = username;
-        info[1] = password;
-        info[2] = firstName;
-        info[3] = lastName;
-
-        return info;
-    }
-
     public String getUsername()
     {
         return username;
