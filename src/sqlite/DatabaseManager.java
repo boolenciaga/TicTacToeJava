@@ -280,10 +280,12 @@ public class DatabaseManager implements DataSource {
         }
         else if(obj instanceof Game)
         {
-//            Game g = (Game) obj;
-//
-//            qryBuilder.append();
+            Game g = (Game) obj;
+
+            qryBuilder.append("User (id,p1Id,starterId) " +
+                              "VALUES (" + g.getId() + ", " + g.getP1Id() + ", " + g.getStarterId() + ')');
         }
+        else if(obj )
 
         try {
             executeInsert(qryBuilder.toString());
@@ -300,13 +302,14 @@ public class DatabaseManager implements DataSource {
     @Override
     public BaseModel delete(BaseModel obj) {
         StringBuilder qryBuilder = new StringBuilder();
-        qryBuilder.append("DELETE FROM ");
+        qryBuilder.append("UPDATE ");
 
         if(obj instanceof User)
         {
             User u = (User) obj;
 
             qryBuilder.append("User " +
+                              "SET status = 'INACTIVE' " +
                               "WHERE userID = \'" + u.getUserID() + "\'");
         }
 
@@ -363,7 +366,7 @@ public class DatabaseManager implements DataSource {
             String query = "SELECT userName "
                         +  "FROM User "
                         +  "WHERE userID > 1 "
-                        +  "AND  status != 'DELETED' ";
+                        +  "AND  status != 'INACTIVE' ";
 
             try {
                 ResultSet rs = executeQuery(query);
