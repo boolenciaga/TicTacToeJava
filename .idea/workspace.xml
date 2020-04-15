@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_30_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_30_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/TicTacToeDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/Database/TicTacToeDB.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/DatabaseManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/Game.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/GameViewers.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/Moves.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/addUserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/addUserWindow.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeJava/sample/sample.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/addUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/addUserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/Moves.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/Moves.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sqlite/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sqlite/DatabaseManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -264,7 +250,7 @@
       <workItem from="1586224892288" duration="902000" />
       <workItem from="1586226280916" duration="1525000" />
       <workItem from="1586228665566" duration="1029000" />
-      <workItem from="1586895426364" duration="12494000" />
+      <workItem from="1586895426364" duration="13228000" />
     </task>
     <servers />
   </component>

@@ -1,6 +1,9 @@
 package modules;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.SimpleFormatter;
 
 public class Moves  extends BaseModel{
 //    private int moveId;
@@ -8,6 +11,17 @@ public class Moves  extends BaseModel{
     private int playerId;
     private int Xcoord;
     private int Ycoord;
-    private Date time;
+
+
+    public String getTime()
+    {
+        String strDate;
+
+        Date time = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        strDate = dateFormat.format(time);
+
+        return strDate;
+    }
 
 }

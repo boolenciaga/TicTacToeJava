@@ -392,7 +392,38 @@ public class DatabaseManager implements DataSource {
 
     @Override
     public List<BaseModel> query(BaseModel obj, String filter) {
-        return null;
+
+        List <BaseModel> list = new ArrayList<>();
+        StringBuilder qryBuilder = new StringBuilder();
+        qryBuilder.append("SELECT ");
+
+        if(obj instanceof User)
+        {
+            qryBuilder.append("userName " +
+                              "FROM User " +
+                              "WHERE status = \'" + filter + "\' ");
+
+            try {
+                ResultSet rs = executeQuery(qryBuilder.toString());
+
+                while(rs.next())
+                {
+                    User u = new User(rs.getString("userName"));
+                    list.add(u);
+                }
+
+                System.out.println("Got all QUERY \n\n");
+
+            } catch (SQLException e) {
+                System.out.println("Error Get All Query");
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+
+
+        return list;
     }
 
     private void executeInsert(String query) throws SQLException {

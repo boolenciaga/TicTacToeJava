@@ -28,7 +28,7 @@ public class Game extends BaseModel {
 
     public void setEndTime() {
         Date ended = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         endTime = dateFormat.format(ended);
     }
 
@@ -38,7 +38,7 @@ public class Game extends BaseModel {
 
     public void setStartTime() {
         Date started = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         startTime = dateFormat.format(started);
     }
 
