@@ -285,7 +285,15 @@ public class DatabaseManager implements DataSource {
             qryBuilder.append("User (id,p1Id,starterId) " +
                               "VALUES (" + g.getId() + ", " + g.getP1Id() + ", " + g.getStarterId() + ')');
         }
-        else if(obj )
+        else if(obj instanceof Moves)
+        {
+            Moves m = (Moves) obj;
+
+            qryBuilder.append("User (id,gameId,playerId,X_coord,Y_coord,time) " +
+                              "VALUES (" + m.getId() + ", " + m.getGameId() + ", " + m.getXcoord() + ", " + m.getYcoord()
+                                         + ", \'" + m.getTime() + "\'" );
+
+        }
 
         try {
             executeInsert(qryBuilder.toString());

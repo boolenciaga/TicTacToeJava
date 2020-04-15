@@ -47,4 +47,8 @@ public class Moves  extends BaseModel{
     public int getYcoord() {
         return Ycoord;
     }
+
+    public int getGameId() {
+        return gameId;
+    }
 }
