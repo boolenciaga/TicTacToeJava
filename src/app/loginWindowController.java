@@ -24,6 +24,9 @@ public class loginWindowController {
     private TextField password;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     void loginButtonClicked(ActionEvent event) throws IOException {
 
         // CHECK AUTHENTICATION
@@ -34,4 +37,12 @@ public class loginWindowController {
         window.show();
     }
 
+    @FXML
+    void backButtonClicked(ActionEvent event) throws IOException {
+        Parent mainWindow = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
+        Scene mainScene = new Scene(mainWindow);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(mainScene);
+        window.show();
+    }
 }

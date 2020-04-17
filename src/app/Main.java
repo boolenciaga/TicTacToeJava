@@ -18,6 +18,7 @@ public class Main extends Application {
     // ../app/loginWindow.fxml
     // ../app/menuWindow.fxml
     // ../app/deleteWindow.fxml
+    // ../app/updateWindow.fxml
 
     @Override
     public void start(Stage primaryStage) throws Exception{

@@ -25,6 +25,11 @@
                   <Font size="24.0" />
                </font>
             </Button>
+            <Button id="nextButtonLogin" fx:id="logoutButton" layoutX="129.0" layoutY="225.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="45.0" prefWidth="343.0" style="-fx-background-color: rgb(214, 214, 214);" text="Log out">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

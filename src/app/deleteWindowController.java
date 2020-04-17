@@ -24,6 +24,9 @@ public class deleteWindowController {
     private TextField password;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     void deleteButtonClicked(ActionEvent event) throws IOException {
 
         // CHECK IF DELETED -> GO TO MAIN WINDOW
@@ -31,6 +34,15 @@ public class deleteWindowController {
         Scene mainScene = new Scene(mainWindow);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(mainScene);
+        window.show();
+    }
+
+    @FXML
+    void backButtonClicked(ActionEvent event) throws IOException {
+        Parent menuWindow = FXMLLoader.load(getClass().getResource("menuWindow.fxml"));
+        Scene menuScene = new Scene(menuWindow);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(menuScene);
         window.show();
     }
 
