@@ -21,9 +21,9 @@ public class mainWindowController {
 
     @FXML
     void createAccountClicked(ActionEvent event) throws IOException {
+
         Parent addUserWindow = FXMLLoader.load(getClass().getResource("addUserWindow.fxml"));
         Scene addUserScene = new Scene(addUserWindow);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(addUserScene);
         window.show();
@@ -36,7 +36,6 @@ public class mainWindowController {
 
         Parent loginWindow = FXMLLoader.load(getClass().getResource("loginWindow.fxml"));
         Scene loginScene = new Scene(loginWindow);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(loginScene);
         window.show();
