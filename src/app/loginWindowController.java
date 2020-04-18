@@ -7,10 +7,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import modules.User;
+import sqlite.DatabaseManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class loginWindowController {
 
@@ -27,14 +33,27 @@ public class loginWindowController {
     private Button backButton;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     void loginButtonClicked(ActionEvent event) throws IOException {
 
-        // CHECK AUTHENTICATION
-        Parent menuWindow = FXMLLoader.load(getClass().getResource("menuWindow.fxml"));
-        Scene menuScene = new Scene(menuWindow);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(menuScene);
-        window.show();
+
+        if(DatabaseManager.getInstance().authenticate(username.getText(), password.getText()) != null)
+        {
+            Parent menuWindow = FXMLLoader.load(getClass().getResource("menuWindow.fxml"));
+            Scene menuScene = new Scene(menuWindow);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(menuScene);
+            window.show();
+        }
+        else
+        {
+            errorLabel.setTextFill(Color.RED);
+            errorLabel.setText("Wrong Username and Password");
+        }
+
+
     }
 
     @FXML
