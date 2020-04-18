@@ -102,4 +102,13 @@ public class User extends BaseModel{
     {
         return status;
     }
+
+    public void getAll() {
+        System.out.println(getUsername());
+        System.out.println(getFirstName());
+        System.out.println(getLastName());
+        System.out.println(getPassword());
+        System.out.println(getStatus());
+        System.out.println(getUserID());
+    }
 }

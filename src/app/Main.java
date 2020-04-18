@@ -31,6 +31,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
 
+        Client currentClient = new Client();
         launch(args);
     }
 }
