@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.addUserController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.updateWindowController">
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to top, #1D4350,  #A43931);">
          <children>
@@ -15,7 +15,7 @@
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <Button id="nextButtonLogin" fx:id="createUser" layoutX="234.0" layoutY="308.0" mnemonicParsing="false" onAction="#createUserClicked" prefHeight="39.0" prefWidth="132.0" style="-fx-background-color: rgb(214, 214, 214);" text="Create User">
+            <Button id="nextButtonLogin" fx:id="update" layoutX="234.0" layoutY="308.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="39.0" prefWidth="132.0" style="-fx-background-color: rgb(214, 214, 214);" text="Update">
                <font>
                   <Font name="Bookman Old Style Bold" size="14.0" />
                </font>
@@ -35,8 +35,12 @@
                   <Font size="15.0" />
                </font>
             </TextField>
-            <Label fx:id="errorLabel" alignment="CENTER" layoutX="191.0" layoutY="360.0" prefHeight="22.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: red;" textAlignment="CENTER" />
-            <Button id="nextButtonLogin" fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="39.0" prefWidth="132.0" style="-fx-background-color: rgb(214, 214, 214);" text="Back">
+            <Label alignment="CENTER" layoutX="44.0" layoutY="21.0" prefHeight="50.0" prefWidth="512.0" text="CHANGE USER INFORMATION" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Button id="nextButtonLogin" fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="39.0" prefWidth="97.0" style="-fx-background-color: rgb(214, 214, 214);" text="Back">
                <font>
                   <Font name="Bookman Old Style Bold" size="14.0" />
                </font>

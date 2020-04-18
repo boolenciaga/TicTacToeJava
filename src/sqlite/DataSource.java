@@ -8,6 +8,7 @@ public interface DataSource {
     BaseModel delete(BaseModel obj);
     BaseModel update(BaseModel obj);
     BaseModel get(int id);
+    BaseModel authenticate(String username, String password);
 
     List <BaseModel> list  (BaseModel obj);
     List <BaseModel> query (BaseModel obj, String filter);

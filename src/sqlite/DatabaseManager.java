@@ -373,6 +373,28 @@ public class DatabaseManager implements DataSource {
     }
 
     @Override
+    public BaseModel authenticate(String username, String password) {
+
+        String query = "SELECT * "
+                +  "FROM User "
+                +  "WHERE userName = \'" + username + "\' "
+                +  "AND   password = \'" + password + "\'";
+
+        try {
+            ResultSet rs = executeQuery(query);
+            User u = new User(rs.getString("userName"), rs.getString("password"), rs.getString("fName"), rs.getString("lName"));
+            u.setUserID(Integer.parseInt(rs.getString("userID")));
+            System.out.println("User Authenticated\n\n");
+            return u;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("User Not Authenticated\n\n");
+            return null;
+        }
+
+    }
+
+    @Override
     public List <BaseModel> list(BaseModel obj) {
         List <BaseModel> list = new ArrayList<>();
 
@@ -417,9 +439,9 @@ public class DatabaseManager implements DataSource {
 
         if(obj instanceof User)
         {
-            qryBuilder.append("userName " +
+            qryBuilder.append("* " +
                               "FROM User " +
-                              "WHERE status = \'" + filter + "\' ");
+                               filter );
 
             try {
                 ResultSet rs = executeQuery(qryBuilder.toString());
@@ -472,6 +494,8 @@ public class DatabaseManager implements DataSource {
 
         return list;
     }
+
+
 
     private void executeInsert(String query) throws SQLException {
 
