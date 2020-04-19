@@ -1,5 +1,6 @@
 package app;
 
+import Messages.LoginMsg;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,10 +37,13 @@ public class loginWindowController {
     private Label errorLabel;
 
     @FXML
-    void loginButtonClicked(ActionEvent event) throws IOException {
+    void loginButtonClicked(ActionEvent event) throws IOException
+    {
+        //request login from server
+        Global.toServer.writeObject(new LoginMsg(username.getText(), password.getText()));
+        boolean authenticated = Global.fromServer.readBoolean();
 
-
-        if(DatabaseManager.getInstance().authenticate(username.getText(), password.getText()) != null)
+        if(authenticated)
         {
             Parent menuWindow = FXMLLoader.load(getClass().getResource("menuWindow.fxml"));
             Scene menuScene = new Scene(menuWindow);
@@ -52,8 +56,6 @@ public class loginWindowController {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Wrong Username and Password");
         }
-
-
     }
 
     @FXML
