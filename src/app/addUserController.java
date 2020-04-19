@@ -1,5 +1,6 @@
 package app;
 
+import Messages.RegistrationMsg;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +16,6 @@ import modules.User;
 import sqlite.DatabaseManager;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Calendar;
 
 public class addUserController {
 
@@ -45,20 +43,34 @@ public class addUserController {
     @FXML
     void createUserClicked(ActionEvent event) {
 
-        if(!username.getText().isBlank() && !password.getText().isBlank() && !firstName.getText().isBlank() &&
-           !lastName.getText().isBlank())
+        if(!username.getText().isBlank() && !password.getText().isBlank()
+            && !firstName.getText().isBlank() && !lastName.getText().isBlank())
         {
+            //prep registration message
             User newUser = new User(username.getText(), password.getText(), firstName.getText(), lastName.getText());
-            Object valid = DatabaseManager.getInstance().insert(newUser);
-            if(valid == null)
-            {
-                errorLabel.setTextFill(Color.LIMEGREEN);
-                errorLabel.setText("User successfully added.");
+            RegistrationMsg regMsg = new RegistrationMsg(newUser);
+
+            try {
+                //send registration msg
+                Global.toServer.writeObject(regMsg);
+                Global.toServer.flush();
+
+                //receive registration status
+                boolean successfulInsert = Global.fromServer.readBoolean();
+
+                if(successfulInsert)
+                {
+                    errorLabel.setTextFill(Color.LIMEGREEN);
+                    errorLabel.setText("User successfully added.");
+                }
+                else
+                {
+                    errorLabel.setTextFill(Color.RED);
+                    errorLabel.setText("Unable to add user");
+                }
             }
-            else
-            {
-                errorLabel.setTextFill(Color.RED);
-                errorLabel.setText("Unable to add user");
+            catch (IOException e) {
+                e.printStackTrace();
             }
         }
         else

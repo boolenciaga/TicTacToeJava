@@ -1,6 +1,8 @@
 package modules;
 
-public class BaseModel {
+import java.io.Serializable;
+
+public class BaseModel implements Serializable {
     private int id;
     
     public int getId() {

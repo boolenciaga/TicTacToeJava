@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import modules.User;
 import sqlite.DatabaseManager;
 
+import java.net.Socket;
 import java.sql.SQLException;
 
 
@@ -21,7 +22,17 @@ public class Main extends Application {
     // ../app/updateWindow.fxml
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception
+    {
+        //establish connection to ServerManager
+        Socket socket = new Socket("localhost", 7777);
+
+        if(socket.isConnected()) {
+            System.out.println("Connected to Server...\n");
+            Global.setSocketWithServer(socket);
+        }
+        else
+            System.out.println("Connection to Server failed...\n");
 
         Parent root = FXMLLoader.load(getClass().getResource("../app/mainWindow.fxml"));
         primaryStage.setScene(new Scene(root));
@@ -29,8 +40,8 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) throws SQLException {
-
+    public static void main(String[] args) throws SQLException
+    {
         Client currentClient = new Client();
         launch(args);
     }
