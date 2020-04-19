@@ -17,7 +17,7 @@ public class DatabaseManager implements DataSource {
     private DatabaseManager() throws SQLException {
         try {
             Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\chabo\\Documents\\GitHub\\Java 4B Repos\\Tic-Tac-Toe repos\\TicTacToeJava\\Database\\TicTacToeDB.db");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Phillip\\Documents\\GitHub\\TicTacToeJava\\Database\\TicTacToeDB.db");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -168,102 +168,102 @@ public class DatabaseManager implements DataSource {
 //        }
 //    }
 
-
-    public  List<String> getAllUser()
-    {
-        List <String> list = new ArrayList<String>();
-
-        try {
-            String query = "SELECT userName "
-                        +  "FROM User "
-                        +  "WHERE userID > ?";
-
-            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
-
-            pstmt.setDouble(1, 1);
-
-            ResultSet rs  = pstmt.executeQuery();
-
-            while(rs.next())
-            {
-                list.add(rs.getString("userName"));
-            }
-
-            System.out.println("ABLE TO GET ALL REGISTERED USERS\n");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return list;
-    }
-
-    public  List<String> getUsers(String status)
-    {
-        List <String> users = new ArrayList<String>();
-        String stat;
-
-        if("OFFLINE".equalsIgnoreCase(status))
-        {
-            stat = "OFFLINE";
-        }
-        else
-        {
-            stat = "ONLINE";
-        }
-
-        try {
-            String query = "SELECT userName "
-                    +  "FROM User "
-                    +  "WHERE status = ?";
-
-            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
-
-            pstmt.setString(1, stat);
-
-                    ResultSet rs  = pstmt.executeQuery();
-
-            while(rs.next())
-            {
-                users.add(rs.getString("userName"));
-            }
-
-            System.out.println("ABLE TO GET ALL " + stat +  " USERS\n");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return users;
-    }
-
-    public  int getUserId(User user) {
-        int id = 0;
-
-        try {
-            String query = "SELECT userID " +
-                           "FROM User " +
-                           "WHERE userName = ?";
-
-            PreparedStatement pstmt  =   getConnection().prepareStatement(query);
-
-            pstmt.setString(1, user.getUsername());
-
-            ResultSet  rs   = pstmt.executeQuery();
-
-            id  = rs.getInt("userID");
-
-            System.out.println("Got User ID!");
-
-        } catch (SQLException e) {
-
-            System.out.println("FAILED TO GET USER ID");
-            e.printStackTrace();
-        }
-
-        return id;
-    }
+//
+//    public  List<String> getAllUser()
+//    {
+//        List <String> list = new ArrayList<String>();
+//
+//        try {
+//            String query = "SELECT userName "
+//                        +  "FROM User "
+//                        +  "WHERE userID > ?";
+//
+//            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
+//
+//            pstmt.setDouble(1, 1);
+//
+//            ResultSet rs  = pstmt.executeQuery();
+//
+//            while(rs.next())
+//            {
+//                list.add(rs.getString("userName"));
+//            }
+//
+//            System.out.println("ABLE TO GET ALL REGISTERED USERS\n");
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        return list;
+//    }
+//
+//    public  List<String> getUsers(String status)
+//    {
+//        List <String> users = new ArrayList<String>();
+//        String stat;
+//
+//        if("OFFLINE".equalsIgnoreCase(status))
+//        {
+//            stat = "OFFLINE";
+//        }
+//        else
+//        {
+//            stat = "ONLINE";
+//        }
+//
+//        try {
+//            String query = "SELECT userName "
+//                    +  "FROM User "
+//                    +  "WHERE status = ?";
+//
+//            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
+//
+//            pstmt.setString(1, stat);
+//
+//                    ResultSet rs  = pstmt.executeQuery();
+//
+//            while(rs.next())
+//            {
+//                users.add(rs.getString("userName"));
+//            }
+//
+//            System.out.println("ABLE TO GET ALL " + stat +  " USERS\n");
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return users;
+//    }
+//
+//    public  int getUserId(User user) {
+//        int id = 0;
+//
+//        try {
+//            String query = "SELECT userID " +
+//                           "FROM User " +
+//                           "WHERE userName = ?";
+//
+//            PreparedStatement pstmt  =   getConnection().prepareStatement(query);
+//
+//            pstmt.setString(1, user.getUsername());
+//
+//            ResultSet  rs   = pstmt.executeQuery();
+//
+//            id  = rs.getInt("userID");
+//
+//            System.out.println("Got User ID!");
+//
+//        } catch (SQLException e) {
+//
+//            System.out.println("FAILED TO GET USER ID");
+//            e.printStackTrace();
+//        }
+//
+//        return id;
+//    }
 
     @Override
     public BaseModel insert(BaseModel obj) {

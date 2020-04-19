@@ -45,6 +45,7 @@ public class loginWindowController {
 
         if(authenticated)
         {
+
             Parent menuWindow = FXMLLoader.load(getClass().getResource("menuWindow.fxml"));
             Scene menuScene = new Scene(menuWindow);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
