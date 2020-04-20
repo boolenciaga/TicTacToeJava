@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -37,6 +38,9 @@ public class updateWindowController implements Initializable {
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private Label errorLabel;
 
     @Override
     public void initialize(URL x, ResourceBundle y)
@@ -74,13 +78,13 @@ public class updateWindowController implements Initializable {
                     //update CurrentAccount
                     Global.CurrentAccount.update(newUser);
 
-//                    errorLabel.setTextFill(Color.LIMEGREEN);
-//                    errorLabel.setText("User successfully updated");
+                    errorLabel.setTextFill(Color.LIMEGREEN);
+                    errorLabel.setText("User successfully updated");
                 }
                 else
                 {
-//                    errorLabel.setTextFill(Color.RED);
-//                    errorLabel.setText("Unable to update user");
+                    errorLabel.setTextFill(Color.RED);
+                    errorLabel.setText("Unable to update user");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -20,10 +20,10 @@ import java.util.Optional;
 public class addUserController {
 
     @FXML
-    private TextField username;
+    private Button createUser;
 
     @FXML
-    private Button createUser;
+    private TextField username;
 
     @FXML
     private TextField firstName;
