@@ -1,8 +1,7 @@
 package ServerSide;
 
-import Messages.LoginMsg;
-import Messages.Message;
-import Messages.RegistrationMsg;
+import Messages.*;
+import modules.User;
 import sqlite.DatabaseManager;
 
 import java.io.IOException;
@@ -60,8 +59,8 @@ public class Server
                     System.out.println(socket.getInetAddress().getHostAddress() + " (port " + socket.getPort() + ")\n");
 
                     //create connection id and store connection
-                    UUID id = UUID.randomUUID();
-                    clientMap.put(id, new ClientConnection(socket, id));
+                    UUID connectID = UUID.randomUUID();
+                    clientMap.put(connectID, new ClientConnection(socket, connectID));
                 }
                 else
                     System.out.println("Server didn't connect !!!\n");
@@ -103,7 +102,7 @@ public class Server
         {
             try
             {
-                //process chat room requests
+                //receive incoming messages
                 while(true)
                 {
                     Message incomingMsg = (Message) objectInputFromClientManager.readObject();
@@ -113,7 +112,8 @@ public class Server
             }
             catch (IOException | ClassNotFoundException e)
             {
-                //TO DO: if caught here likely client closed program. kill this client connection
+                if(e instanceof IOException)
+                    clientMap.remove(connectionID);
                 System.out.println("exception caught in one of server's ClientConnection object's run()");
                 e.printStackTrace();
             }
@@ -126,7 +126,7 @@ public class Server
                 objectOutputToClientManager.writeObject(msg);
             }
             catch (IOException e) {
-//                System.out.println("exception caught in sendMessageFromPub() of " + memberName + "'s MemberConnection object");
+                //System.out.println("exception caught in sendMessageFromPub() of " + memberName + "'s MemberConnection object");
                 e.printStackTrace();
             }
         }
@@ -159,34 +159,126 @@ public class Server
                     //pull message off queue
                     Message nextMsg = msgQueue.take();
 
+                    ClientConnection client = clientMap.get(nextMsg.getConnectionID());
+
                     //process the message
                     if(nextMsg instanceof RegistrationMsg)
                     {
                         RegistrationMsg regMsg = (RegistrationMsg) nextMsg;
 
-                        Object success = DatabaseManager.getInstance().insert(regMsg.getUser());
+                        User returnedUser = (User) DatabaseManager.getInstance().getUser(regMsg.getUser().getUsername());
 
-                        ClientConnection client = clientMap.get(regMsg.getConnectionID());
+                        if(returnedUser == null) //account does not exist
+                        {
+                            client.objectOutputToClientManager.writeBoolean(false); //notify account doesnt exist
 
-                        if(success == null)
-                            client.objectOutputToClientManager.writeBoolean(true);
-                        else
-                            client.objectOutputToClientManager.writeBoolean(false);
+                            Object successfulInsert = DatabaseManager.getInstance().insert(regMsg.getUser());
 
-                        client.objectOutputToClientManager.flush();
+                            if(successfulInsert != null)
+                                client.objectOutputToClientManager.writeBoolean(true);
+                            else
+                                client.objectOutputToClientManager.writeBoolean(false);
+
+                            client.objectOutputToClientManager.flush();
+                        }
+                        else //account already exists
+                        {
+                            client.objectOutputToClientManager.writeBoolean(true); //notify account exists
+
+                            //notify of INACTIVE status
+                            if(returnedUser.getStatus().equals("INACTIVE"))
+                                client.objectOutputToClientManager.writeBoolean(true);
+                            else
+                                client.objectOutputToClientManager.writeBoolean(false);
+
+                            client.objectOutputToClientManager.flush();
+                        }
                     }
                     else if(nextMsg instanceof LoginMsg)
                     {
                         LoginMsg loginMsg = (LoginMsg) nextMsg;
 
-                        Object returnStatus = DatabaseManager.getInstance().authenticate(loginMsg.getUsername(), loginMsg.getPassword());
-                        ClientConnection client = clientMap.get(loginMsg.getConnectionID());
+                        User returnedUser = (User) DatabaseManager.getInstance().authenticate(loginMsg.getUsername(), loginMsg.getPassword());
+
+                        if(returnedUser != null)
+                        {
+                            //notify authentication status
+                            client.objectOutputToClientManager.writeBoolean(true);
+
+                            if(returnedUser.getStatus().equals("ONLINE"))
+                            {
+                                //notify that user's already online
+                                client.objectOutputToClientManager.writeBoolean(true);
+                            }
+                            else
+                            {
+                                //notify user is not already online
+                                client.objectOutputToClientManager.writeBoolean(false);
+
+                                //send the user info
+                                User user = (User) DatabaseManager.getInstance().getUser(loginMsg.getUsername());
+                                user.setStatus("ONLINE");
+                                DatabaseManager.getInstance().update(user);
+                                client.objectOutputToClientManager.writeObject(user);
+                            }
+                        }
+                        else
+                            client.objectOutputToClientManager.writeBoolean(false); //not authenticated
+
+                        client.objectOutputToClientManager.flush();
+                    }
+                    else if(nextMsg instanceof DeleteUserMsg)
+                    {
+                        DeleteUserMsg deleteMsg = (DeleteUserMsg) nextMsg;
+
+                        Object returnStatus = DatabaseManager.getInstance().delete(deleteMsg.getUser());
 
                         if(returnStatus != null)
+                        {
+                            System.out.println(deleteMsg.getUser().getUsername() + " account soft deleted\n");
+                        }
+                    }
+                    else if(nextMsg instanceof LogoutMsg)
+                    {
+                        LogoutMsg logoutMsg = (LogoutMsg) nextMsg;
+                        logoutMsg.getUser().setStatus("OFFLINE");
+                        Object returnStatus = DatabaseManager.getInstance().update(logoutMsg.getUser());
+
+                        if(returnStatus != null)
+                        {
+                            System.out.println(logoutMsg.getUser().getUsername() + " logged out\n");
+                        }
+                    }
+                    else if(nextMsg instanceof ReactivateUserMsg)
+                    {
+                        ReactivateUserMsg reactivateMsg = (ReactivateUserMsg) nextMsg;
+                        User returnedUser = (User) DatabaseManager.getInstance().getUser(reactivateMsg.getUser().getUsername());
+
+                        if(returnedUser != null) //account does exists
+                        {
+                            if(returnedUser.getStatus().equals("INACTIVE")) //account is inactive
+                            {
+                                //update and reactivate account
+                                returnedUser.setStatus("OFFLINE");
+                                returnedUser.setFirstName(reactivateMsg.getUser().getFirstName());
+                                returnedUser.setLastName(reactivateMsg.getUser().getLastName());
+                                returnedUser.setPassword(reactivateMsg.getUser().getPassword());
+                                DatabaseManager.getInstance().update(returnedUser);
+                            }
+                        }
+                        else //account didn't exist
+                        {
+                            //not sure what to do here... probably no no need for any action
+                        }
+                    }
+                    else if(nextMsg instanceof UpdateUserMsg)
+                    {
+                        UpdateUserMsg updateUserMsg = (UpdateUserMsg) nextMsg;
+                        Object returnedUser = DatabaseManager.getInstance().update(updateUserMsg.getUser());
+                        if(returnedUser != null)
                             client.objectOutputToClientManager.writeBoolean(true);
                         else
                             client.objectOutputToClientManager.writeBoolean(false);
-
                         client.objectOutputToClientManager.flush();
                     }
                 }

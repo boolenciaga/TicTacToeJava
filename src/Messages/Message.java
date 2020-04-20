@@ -1,5 +1,8 @@
 package Messages;
 
+import javafx.beans.binding.MapExpression;
+import modules.User;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;

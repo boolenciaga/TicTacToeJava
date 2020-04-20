@@ -1,5 +1,7 @@
 package app;
 
+import modules.User;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,6 +13,8 @@ import java.util.Stack;
 
 class Global
 {
+    // SOCKET WITH THE SERVER
+
     static Socket socketWithServer;
     static ObjectOutputStream toServer;
     static ObjectInputStream fromServer;
@@ -22,7 +26,33 @@ class Global
     }
 
 
+    // CURRENT USER ACCOUNT
 
+    public static class CurrentAccount
+    {
+        private static User currentUser;
+
+        static void update(User user)
+        {
+            currentUser = user;
+        }
+
+        static void reset()
+        {
+            currentUser = null;
+        }
+
+        static User getCurrentUser()
+        {
+            return currentUser;
+        }
+
+        static void display()
+        {
+            if(currentUser != null)
+                currentUser.getAll();
+        }
+    }
 
 
 

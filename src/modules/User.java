@@ -4,16 +4,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
-public class User extends BaseModel{
-
-    private int    userID;
+public class User extends BaseModel
+{
     private String username;
     private String password;
     private String firstName;
     private String lastName;
     private String created;
     private String status;
+    private final String userUUID;
 
     public User(String username, String password, String firstName, String lastName)
     {
@@ -23,12 +24,24 @@ public class User extends BaseModel{
         setLastName(lastName);
         setStatus("OFFLINE");
         setCreated();
+        userUUID = UUID.randomUUID().toString();
     }
 
-    public User(String username)
+    public User(String username, String password, String firstName, String lastName, String status, String id, String created)
     {
         setUsername(username);
+        setPassword(password);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setStatus(status);
+        setCreated(created);
+        userUUID = id;
     }
+
+//    public User(String username)
+//    {
+//        setUsername(username);
+//    }
 
     public void setUsername(String username)
     {
@@ -58,10 +71,15 @@ public class User extends BaseModel{
         System.out.println(dateFormat.format(creation));
     }
 
-    public void setUserID(int id)
+    public void setCreated(String s)
     {
-        userID = id;
+        created = s;
     }
+
+//    public void setUserID(int id)
+//    {
+//        userID = id;
+//    }
 
     public void setStatus(String status)
     {
@@ -88,9 +106,9 @@ public class User extends BaseModel{
         return password;
     }
 
-    public int    getUserID()
+    public String getUserID()
     {
-        return userID;
+        return userUUID;
     }
 
     public String getCreation()

@@ -50,220 +50,7 @@ public class DatabaseManager implements DataSource {
         return instance;
 
     }
-//
-//    public boolean addUser(User user) throws SQLException, ClassNotFoundException {
-//        if(instance != null)
-//        {
-//            synchronized (DatabaseManager.class)
-//            {
-//
-//                String query = "INSERT INTO User(fName,lName,password,dateCreated,userName,status)" +
-//                               "VALUES (?,?,?,?,?,?)";
-//
-//                PreparedStatement pst =  getConnection().prepareStatement(query);
-//
-//                pst.setString(1, user.getFirstName());
-//                pst.setString(2, user.getLastName());
-//                pst.setString(3, user.getPassword());
-//                pst.setString(4, user.getCreation());
-//                pst.setString(5, user.getUsername());
-//                pst.setString(6, user.getStatus());
-//
-//                if(pst.execute())
-//                {
-//
-//                }
-//
-//                System.out.println("ADDING USER SUCCESSFUL\n\n");
-//
-//
-//                pst.close();
-//            }
-//        }
-//        else
-//        {
-//            System.out.println("Add query failed.");
-//            return false;
-//        }
-//
-//        return true;
-//    }
-//
-//    public  boolean updateUser(User user)
-//    {
-//        if (instance != null)
-//        {
-//            synchronized (DatabaseManager.class)
-//            {
-//                try {
-//
-//                    String query = "UPDATE  User " +
-//                            "SET userName = ? , password = ? , fName = ? , lName = ? " +
-//                            "WHERE userID = ?";
-//
-//                    PreparedStatement pst =  connection.prepareStatement(query);
-//
-//                    pst.setString(1,user.getUsername());
-//                    pst.setString(2,user.getPassword());
-//                    pst.setString(3,user.getFirstName());
-//                    pst.setString(4,user.getLastName());
-//                    pst.setInt(5, user.getId());
-//
-//                    pst.executeUpdate();
-//
-//                    pst.close();
-//
-//                    System.out.println("UPDATED USER");
-//
-//                    return true;
-//
-//                } catch (SQLException e) {
-//                    System.out.println("FAILED TO UPDATE USER");
-//                    e.printStackTrace();
-//
-//                }
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    public void deleteUser(String username)
-//    {
-//        try {
-//
-//            String query = "DELETE FROM USER " +
-//                           "WHERE userName = ?";
-//            PreparedStatement pst = getConnection().prepareStatement(query);
-//
-//            pst.setString(1, username);
-//
-//            pst.executeUpdate();
-//
-//            System.out.println("DELETED " + username + "!!!\n");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public  void deleteUser(int id)
-//    {
-//        try {
-//
-//            String query = "DELETE FROM USER " +
-//                           "WHERE userID = ?";
-//
-//
-//            PreparedStatement pst =  getConnection().prepareStatement(query);
-//
-//            pst.setInt(1, id);
-//
-//            pst.executeUpdate();
-//
-//            System.out.println("DELETED ID# " + id + "!!!\n");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-
-    public  List<String> getAllUser()
-    {
-        List <String> list = new ArrayList<String>();
-
-        try {
-            String query = "SELECT userName "
-                        +  "FROM User "
-                        +  "WHERE userID > ?";
-
-            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
-
-            pstmt.setDouble(1, 1);
-
-            ResultSet rs  = pstmt.executeQuery();
-
-            while(rs.next())
-            {
-                list.add(rs.getString("userName"));
-            }
-
-            System.out.println("ABLE TO GET ALL REGISTERED USERS\n");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return list;
-    }
-
-    public  List<String> getUsers(String status)
-    {
-        List <String> users = new ArrayList<String>();
-        String stat;
-
-        if("OFFLINE".equalsIgnoreCase(status))
-        {
-            stat = "OFFLINE";
-        }
-        else
-        {
-            stat = "ONLINE";
-        }
-
-        try {
-            String query = "SELECT userName "
-                    +  "FROM User "
-                    +  "WHERE status = ?";
-
-            PreparedStatement pstmt  =  getConnection().prepareStatement(query);
-
-            pstmt.setString(1, stat);
-
-                    ResultSet rs  = pstmt.executeQuery();
-
-            while(rs.next())
-            {
-                users.add(rs.getString("userName"));
-            }
-
-            System.out.println("ABLE TO GET ALL " + stat +  " USERS\n");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return users;
-    }
-
-    public  int getUserId(User user) {
-        int id = 0;
-
-        try {
-            String query = "SELECT userID " +
-                           "FROM User " +
-                           "WHERE userName = ?";
-
-            PreparedStatement pstmt  =   getConnection().prepareStatement(query);
-
-            pstmt.setString(1, user.getUsername());
-
-            ResultSet  rs   = pstmt.executeQuery();
-
-            id  = rs.getInt("userID");
-
-            System.out.println("Got User ID!");
-
-        } catch (SQLException e) {
-
-            System.out.println("FAILED TO GET USER ID");
-            e.printStackTrace();
-        }
-
-        return id;
-    }
 
     @Override
     public BaseModel insert(BaseModel obj) {
@@ -274,9 +61,9 @@ public class DatabaseManager implements DataSource {
         {
             User u = (User) obj;
 
-            qryBuilder.append("User (fName,lName,password,dateCreated,userName,status) " +
+            qryBuilder.append("User (fName,lName,password,dateCreated,userName,status,UUID) " +
                               "VALUES (\'" +  u.getFirstName() + "\', \'" + u.getLastName() + "\', \'" + u.getPassword() + "\', \'" +
-                              u.getCreation() + "\', \'" + u.getUsername() + "\', \'" + u.getStatus() + "\')" );
+                              u.getCreation() + "\', \'" + u.getUsername() + "\', \'" + u.getStatus() + "\', \'" + u.getUserID() + "\')" );
         }
         else if(obj instanceof Game)
         {
@@ -304,11 +91,11 @@ public class DatabaseManager implements DataSource {
         try {
             executeInsert(qryBuilder.toString());
             System.out.println("Insertion worked\n\n");
-            return null;
+            return obj;
         } catch (SQLException e) {
             System.out.println("error executing insert\n\n");
             e.printStackTrace();
-            return obj;
+            return null;
         }
 
     }
@@ -324,19 +111,19 @@ public class DatabaseManager implements DataSource {
 
             qryBuilder.append("User " +
                               "SET status = 'INACTIVE' " +
-                              "WHERE userID = \'" + u.getUserID() + "\'");
+                              "WHERE UUID = \'" + u.getUserID() + "\'");
         }
 
-        try {
+        try
+        {
             executeDelete(qryBuilder.toString());
             System.out.println("DELETED SUCCESS\n\n");
-            return null;
+            return obj;
         } catch (SQLException e) {
             System.out.println("DELETED FAIL\n\n");
             e.printStackTrace();
-            return obj;
+            return null;
         }
-
     }
 
 
@@ -353,17 +140,17 @@ public class DatabaseManager implements DataSource {
                               "SET userName = \'" + u.getUsername()  + "\', password = \'" + u.getPassword() + "\', fName = \'"
                                                   + u.getFirstName() + "\', lName = \'"    + u.getLastName() + "\', status = \'"
                                                   + u.getStatus()    + "\' "               +
-                              "WHERE userID = \'" + u.getUserID() + "\'");
+                              "WHERE UUID = \'" + u.getUserID() + "\'");
         }
 
         try {
             executeUpdate(qryBuilder.toString());
             System.out.println("UPDATE QUERY Successful\n\n");
-            return null;
+            return obj;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("UNABLE to update QUERY");
-            return obj;
+            return null;
         }
     }
 
@@ -378,12 +165,12 @@ public class DatabaseManager implements DataSource {
         String query = "SELECT * "
                 +  "FROM User "
                 +  "WHERE userName = \'" + username + "\' "
-                +  "AND   password = \'" + password + "\'";
+                +  "AND   password = \'" + password + "\'"
+                +  "AND   status   != 'INACTIVE'";
 
         try {
             ResultSet rs = executeQuery(query);
-            User u = new User(rs.getString("userName"), rs.getString("password"), rs.getString("fName"), rs.getString("lName"));
-            u.setUserID(Integer.parseInt(rs.getString("userID")));
+            User u = new User(rs.getString("userName"), rs.getString("password"), rs.getString("fName"), rs.getString("lName"), rs.getString("status"), rs.getString("UUID"), rs.getString("dateCreated"));
             System.out.println("User Authenticated\n\n");
             return u;
         } catch (SQLException e) {
@@ -410,8 +197,8 @@ public class DatabaseManager implements DataSource {
 
                 while(rs.next())
                 {
-                    User u = new User(rs.getString("userName"));
-                    list.add(u);
+//                    User u = new User(rs.getString("userName"));
+//                    list.add(u);
                 }
 
                 System.out.println("Got all QUERY \n\n");
@@ -448,8 +235,8 @@ public class DatabaseManager implements DataSource {
 
                 while(rs.next())
                 {
-                    User u = new User(rs.getString("userName"));
-                    list.add(u);
+//                    User u = new User(rs.getString("userName"));
+//                    list.add(u);
                 }
 
                 System.out.println("Got all QUERY \n\n");
@@ -493,6 +280,31 @@ public class DatabaseManager implements DataSource {
 
 
         return list;
+    }
+
+
+    @Override
+    public BaseModel getUser(String userName)
+    {
+        StringBuilder qryBuilder = new StringBuilder();
+        qryBuilder.append("SELECT ");
+
+            qryBuilder.append("* " + "FROM User " + "WHERE userName = \"" + userName + "\"");
+
+            try
+            {
+                ResultSet rs = executeQuery(qryBuilder.toString());
+
+                rs.next();
+                User user = new User(rs.getString("userName"), rs.getString("password"), rs.getString("fName"), rs.getString("lName"), rs.getString("status"), rs.getString("UUID"), rs.getString("dateCreated"));
+
+                return user;
+            }
+            catch (SQLException e) {
+                System.out.println("exception in getUser()");
+                e.printStackTrace();
+                return null;
+            }
     }
 
 

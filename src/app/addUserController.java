@@ -1,5 +1,6 @@
 package app;
 
+import Messages.ReactivateUserMsg;
 import Messages.RegistrationMsg;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,15 +8,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modules.User;
 import sqlite.DatabaseManager;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class addUserController {
 
@@ -55,18 +55,55 @@ public class addUserController {
                 Global.toServer.writeObject(regMsg);
                 Global.toServer.flush();
 
-                //receive registration status
-                boolean successfulInsert = Global.fromServer.readBoolean();
+                //receive account-already-exists status
+                boolean accountAlreadyExists = Global.fromServer.readBoolean();
 
-                if(successfulInsert)
+                if(!accountAlreadyExists)
                 {
-                    errorLabel.setTextFill(Color.LIMEGREEN);
-                    errorLabel.setText("User successfully added.");
+                    //receive registration status
+                    boolean successfulInsert = Global.fromServer.readBoolean();
+
+                    if(successfulInsert)
+                    {
+                        errorLabel.setTextFill(Color.LIMEGREEN);
+                        errorLabel.setText("User successfully added");
+                    }
+                    else
+                    {
+                        errorLabel.setTextFill(Color.RED);
+                        errorLabel.setText("Unable to add user");
+                    }
                 }
                 else
                 {
-                    errorLabel.setTextFill(Color.RED);
-                    errorLabel.setText("Unable to add user");
+                    //receive inactive status
+                    boolean accountInactive = Global.fromServer.readBoolean();
+
+                    if(accountInactive)
+                    {
+                        String message = "This account is inactive, do you want to reactivate it?"
+                                + "\nThe information entered will replace any old account details.";
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message);
+                        alert.setTitle("Reactivate Account");
+                        alert.setHeaderText("Username: " + regMsg.getUser().getUsername());
+                        Optional<ButtonType> buttonResult = alert.showAndWait();
+
+                        if(buttonResult.get() == ButtonType.OK)
+                        {
+                            //send reactivate message
+                            ReactivateUserMsg reactivateMsg = new ReactivateUserMsg(newUser);
+                            Global.toServer.writeObject(reactivateMsg);
+                            Global.toServer.flush();
+
+                            errorLabel.setTextFill(Color.LIMEGREEN);
+                            errorLabel.setText("User successfully reactivated");
+                        }
+                    }
+                    else //account exists and is active
+                    {
+                        errorLabel.setTextFill(Color.RED);
+                        errorLabel.setText("An account with this username already exists");
+                    }
                 }
             }
             catch (IOException e) {
@@ -76,7 +113,7 @@ public class addUserController {
         else
         {
             errorLabel.setTextFill(Color.RED);
-            errorLabel.setText("Please Enter Valid Information.");
+            errorLabel.setText("Please fill out all fields to register");
         }
     }
 

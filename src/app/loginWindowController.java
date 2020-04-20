@@ -37,7 +37,7 @@ public class loginWindowController {
     private Label errorLabel;
 
     @FXML
-    void loginButtonClicked(ActionEvent event) throws IOException
+    void loginButtonClicked(ActionEvent event) throws IOException, ClassNotFoundException
     {
         //request login from server
         Global.toServer.writeObject(new LoginMsg(username.getText(), password.getText()));
@@ -45,11 +45,26 @@ public class loginWindowController {
 
         if(authenticated)
         {
-            Parent menuWindow = FXMLLoader.load(getClass().getResource("menuWindow.fxml"));
-            Scene menuScene = new Scene(menuWindow);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(menuScene);
-            window.show();
+            boolean userOnline = Global.fromServer.readBoolean();
+
+            if(!userOnline)
+            {
+                //update the current account object
+                User user = (User) Global.fromServer.readObject();
+                Global.CurrentAccount.update(user);
+
+                //proceed to the menu window
+                Parent menuWindow = FXMLLoader.load(getClass().getResource("menuWindow.fxml"));
+                Scene menuScene = new Scene(menuWindow);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(menuScene);
+                window.show();
+            }
+            else
+            {
+                errorLabel.setTextFill(Color.RED);
+                errorLabel.setText("User is already online");
+            }
         }
         else
         {

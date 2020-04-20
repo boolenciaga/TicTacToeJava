@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import modules.User;
-import sqlite.DatabaseManager;
 
 import java.net.Socket;
 import java.sql.SQLException;
@@ -42,7 +40,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException
     {
-        Client currentClient = new Client();
+//        CurrentAccount currentUser = new CurrentAccount();
         launch(args);
     }
 }
