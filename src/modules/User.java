@@ -16,7 +16,6 @@ public class User extends BaseModel
     private String status;
     private final String userUUID;
 
-    public User(){}
     public User(String username, String password, String firstName, String lastName)
     {
         setUsername(username);
