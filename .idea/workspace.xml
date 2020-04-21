@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6f310d7-33d1-40ef-b413-42c0f912a7b3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_30_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_30_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/TicTacToeDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/Database/TicTacToeDB.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TicTacToeJava.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TicTacToeJava.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/addUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/addUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/addUserWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/addUserWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/loginWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/loginWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/loginWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/loginWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/updateWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/updateWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/updateWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/updateWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sqlite/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sqlite/DatabaseManager.java" afterDir="false" />
-    </list>
+    <list default="true" id="a6f310d7-33d1-40ef-b413-42c0f912a7b3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
